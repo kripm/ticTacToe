@@ -3,12 +3,8 @@ package myself;
 import java.util.Scanner;
 
 public class Player {
-    char mark;
+    private char mark;
 
-    Player (char mark) {
-        this.mark = mark;
-    }
-    
     public static void move() {
         static Scanner sc = new Scanner(System.in);
         boolean validInput = false;
@@ -40,6 +36,14 @@ public class Player {
                 System.out.println("You should enter numbers!");
             }
         }
+    }
+    
+    public char getMark() {
+        return mark;
+    }
+
+    public void setMark(char mark) {
+        this.mark = mark;
     }
 }
 
