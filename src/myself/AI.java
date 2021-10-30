@@ -5,9 +5,11 @@ import java.util.Random;
 class AI {
     static Random rn = new Random();
     private Difficulty d;
+    char mark;
 
-    AI (Difficulty d) {
+    AI (Difficulty d, char mark) {
         this.d = d;
+        this.mark = mark;
     }
 
     void move() {
