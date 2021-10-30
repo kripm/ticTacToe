@@ -2,7 +2,6 @@ package myself;
 
 public class Board {
     private static char[][] gameBoard = new char[3][3];
-    private static char turnMarker;
     private static int turn = 1;
     static GameState gameState = GameState.UNFINISHED;
 
@@ -46,6 +45,22 @@ public class Board {
             playerOne.move();
         } else if (ai.mark == 'O' & turn == 0) {
             ai.move();
+        }
+    }
+    
+    static void play(Player playerOne, Player playerTwo) {
+        if (turn == 1) {
+            playerOne.move();
+        } else if (turn == 0) {
+            playerTwo.move();
+        }
+    }
+
+    public static void play(AI easyAI, AI easyAII) {
+        if (turn == 1) {
+            easyAI.move();
+        } else if (turn == 0) {
+            easyAII.move();
         }
     }
     
