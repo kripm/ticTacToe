@@ -36,7 +36,19 @@ public class Board {
         }
         System.out.println("---------");
     }
-
+    
+    static void play(Player playerOne, AI ai) { // credits to b4ara for his wisdom.
+        if (playerOne.mark == 'X' & turn == 1) {
+            playerOne.move();
+        } else if (ai.mark == 'X' & turn == 1) {
+            ai.move();
+        } else if (playerOne.mark == 'O' & turn == 0) {
+            playerOne.move();
+        } else if (ai.mark == 'O' & turn == 0) {
+            ai.move();
+        }
+    }
+    
     static void place(int X, int Y) {
         if (turn == 1) {
             gameBoard[X][Y] = 'X';
