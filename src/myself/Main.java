@@ -5,14 +5,12 @@ public class Main {
     public static void main(String[] args) {
         Difficulty d = Difficulty.EASY;
         AI easyAI = new AI(Difficulty.EASY);
+        AI easyAI = new AI(Difficulty.EASY, 'X');
+        Player playerOne = new Player('O');
 
         Board.start();
         while (Board.gameState == GameState.UNFINISHED) {
-            switch (d) {
-                case EASY:
-                    Player.move();
-                    easyAI.move();
-            }
+            Board.play(playerOne, easyAI);
         }
     }
 }
