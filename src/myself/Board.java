@@ -66,10 +66,10 @@ public class Board {
     
     static void place(int X, int Y) {
         if (turn == 1) {
-            gameBoard[X][Y] = 'X';
+            gameBoard[X][Y] = mark;
             turn--;
         } else if (turn == 0) {
-            gameBoard[X][Y] = 'O';
+            gameBoard[X][Y] = mark;
             turn++;
         }
         current();
