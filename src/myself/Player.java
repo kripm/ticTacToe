@@ -3,10 +3,14 @@ package myself;
 import java.util.Scanner;
 
 public class Player {
-    static Scanner sc = new Scanner(System.in);
+    char mark;
 
+    Player (char mark) {
+        this.mark = mark;
+    }
+    
     public static void move() {
-
+        static Scanner sc = new Scanner(System.in);
         boolean validInput = false;
         while (!validInput) {
             try {
