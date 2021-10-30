@@ -5,11 +5,10 @@ import java.util.Random;
 class AI {
     static Random rn = new Random();
     private Difficulty d;
-    char mark;
+    private char mark;
 
-    AI (Difficulty d, char mark) {
+    AI (Difficulty d) {
         this.d = d;
-        this.mark = mark;
     }
 
     void move() {
@@ -20,10 +19,18 @@ class AI {
                     int X = rn.nextInt(3);
                     int Y = rn.nextInt(3);
                     if (Board.checkPossibleMove(X, Y)) {
-                        Board.place(X, Y);
+                        Board.place(X, Y, mark);
                         moveComplete = true;
                     }
                 } while (!moveComplete);
         }
+    }
+    
+    public char getMark() {
+        return mark;
+    }
+
+    public void setMark(char mark) {
+        this.mark = mark;
     }
 }
