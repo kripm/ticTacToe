@@ -35,19 +35,19 @@ public class Board {
         }
         System.out.println("---------");
     }
-    
+
     static void play(Player playerOne, AI ai) { // credits to b4ara for his wisdom.
-        if (playerOne.mark == 'X' & turn == 1) {
+        if (playerOne.getMark() == 'X' & turn == 1) {
             playerOne.move();
-        } else if (ai.mark == 'X' & turn == 1) {
+        } else if (ai.getMark() == 'X' & turn == 1) {
             ai.move();
-        } else if (playerOne.mark == 'O' & turn == 0) {
+        } else if (playerOne.getMark() == 'O' & turn == 0) {
             playerOne.move();
-        } else if (ai.mark == 'O' & turn == 0) {
+        } else if (ai.getMark() == 'O' & turn == 0) {
             ai.move();
         }
     }
-    
+
     static void play(Player playerOne, Player playerTwo) {
         if (turn == 1) {
             playerOne.move();
@@ -56,15 +56,15 @@ public class Board {
         }
     }
 
-    public static void play(AI easyAI, AI easyAII) {
+    public static void play(AI ai, AI aii) {
         if (turn == 1) {
-            easyAI.move();
+            ai.move();
         } else if (turn == 0) {
-            easyAII.move();
+            aii.move();
         }
     }
-    
-    static void place(int X, int Y) {
+
+    static void place(int X, int Y, char mark) {
         if (turn == 1) {
             gameBoard[X][Y] = mark;
             turn--;
@@ -81,7 +81,7 @@ public class Board {
         return gameBoard[X][Y] == ' ';
     }
 
-    public static GameState checkWinOrDraw() {
+    static GameState checkWinOrDraw() {
         boolean isNotFull = false;
 
         for (char[] character : gameBoard) {
