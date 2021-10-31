@@ -8,8 +8,8 @@ public class Main {
 
     public static void main(String[] args) {
         Difficulty d = Difficulty.EASY;
-        AI easyAI = new AI(Difficulty.EASY);
-        Player playerOne = new Player();
+        EasyAI easyAI = new EasyAI();
+        final Player playerOne = new Player();
 
         while (playing) {
             switch (start()) {
@@ -45,7 +45,7 @@ public class Main {
                     break;
 
                 case ("EVE"):
-                    AI easyAII = new AI(Difficulty.EASY);
+                    EasyAI easyAII = new EasyAI();
                     Board.start();
                     easyAI.setMark('X');
                     easyAII.setMark('O');
@@ -90,7 +90,7 @@ public class Main {
         String[] params = null;
        do {
             try {
-                System.out.println("Input command: ");
+                System.out.print("Input command: ");
                 String input = sc.nextLine();
                 params = input.split(" ");
                 if (params[0].equals("exit")) {
