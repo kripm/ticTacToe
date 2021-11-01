@@ -3,10 +3,10 @@ package myself;
 import java.util.Random;
 
 public class EasyAI extends AI {
-    static Random rn = new Random();
     private char mark;
 
     void move() {
+        Random rn = new Random();
         boolean moveComplete = false;
         do {
             int X = rn.nextInt(3);
@@ -22,7 +22,11 @@ public class EasyAI extends AI {
         return mark;
     }
 
-    public void setMark(char mark) {
-        this.mark = mark;
+    void isX(boolean answer) {
+         if (answer) {
+             this.mark = 'X';
+         } else {
+             this.mark = 'O';
+         }
     }
 }
