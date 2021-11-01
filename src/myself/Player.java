@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Player {
     private char mark;
 
-    public static void move() {
+    void move() {
         static Scanner sc = new Scanner(System.in);
         boolean validInput = false;
         while (!validInput) {
@@ -38,12 +38,16 @@ public class Player {
         }
     }
     
-    public char getMark() {
+    char getMark() {
         return mark;
     }
 
-    public void setMark(char mark) {
-        this.mark = mark;
+    void isX(boolean answer) {
+        if (answer) {
+            this.mark = 'X';
+        } else {
+            this.mark = 'O';
+        }
     }
 }
 
