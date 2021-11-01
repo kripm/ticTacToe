@@ -23,20 +23,46 @@ public class MediumAI extends AI {
         } while (!moveComplete);
     }
 
-    int[] checkThreat() {
+    int[] checkThreat() { // very.. convoluted. i know.
         for (int i = 0; i < 3; i++) {
             if (Board.getMarkAt(i, 0) == Main.playerOne.getMark()
-                    & Board.getMarkAt(i, 1) == Main.playerOne.getMark()) {
+                    & Board.getMarkAt(i, 1) == Main.playerOne.getMark() & Board.getMarkAt(i, 2) != mark) {
                 return new int[]{i, 2};
             } else if (Board.getMarkAt(i, 1) == Main.playerOne.getMark()
-                    & Board.getMarkAt(i, 2) == Main.playerOne.getMark()) {
+                    & Board.getMarkAt(i, 2) == Main.playerOne.getMark() & Board.getMarkAt(i, 0) != mark) {
                 return new int[]{i, 0};
+            } else if (Board.getMarkAt(i, 0) == Main.playerOne.getMark()
+                    & Board.getMarkAt(i, 2) == Main.playerOne.getMark() & Board.getMarkAt(i, 1) != mark) {
+                return new int[]{i, 1};
             } else if (Board.getMarkAt(0, i) == Main.playerOne.getMark()
-                    & Board.getMarkAt(1, i) == Main.playerOne.getMark()) {
+                    & Board.getMarkAt(1, i) == Main.playerOne.getMark() & Board.getMarkAt(2, i) != mark) {
                 return new int[]{2, i};
             } else if (Board.getMarkAt(1, i) == Main.playerOne.getMark()
-                    & Board.getMarkAt(2, i) == Main.playerOne.getMark()) {
+                    & Board.getMarkAt(2, i) == Main.playerOne.getMark() & Board.getMarkAt(0, i) != mark) {
                 return new int[]{0, i};
+            } else if (Board.getMarkAt(0, i) == Main.playerOne.getMark()
+                    & Board.getMarkAt(2, i) == Main.playerOne.getMark() & Board.getMarkAt(1, i) != mark) {
+                return new int[]{1, i};
+            }
+
+            if (Board.getMarkAt(0, 0) == Main.playerOne.getMark()
+                    & Board.getMarkAt(1, 1) == Main.playerOne.getMark() & Board.getMarkAt(2, 2) != mark) {
+                return new int[]{2, 2};
+            } else if (Board.getMarkAt(1, 1) == Main.playerOne.getMark()
+                    & Board.getMarkAt(2, 2) == Main.playerOne.getMark() & Board.getMarkAt(0, 0) != mark) {
+                return new int[]{0, 0};
+            } else if (Board.getMarkAt(0, 0) == Main.playerOne.getMark()
+                    & Board.getMarkAt(2, 2) == Main.playerOne.getMark() & Board.getMarkAt(1, 1) != mark) {
+                return new int[]{1, 1};
+            } else if (Board.getMarkAt(0, 2) == Main.playerOne.getMark()
+                    & Board.getMarkAt(1, 1) == Main.playerOne.getMark() & Board.getMarkAt(2, 0) != mark) {
+                return new int[]{2, 0};
+            } else if (Board.getMarkAt(2, 0) == Main.playerOne.getMark()
+                    & Board.getMarkAt(1, 1) == Main.playerOne.getMark() & Board.getMarkAt(0, 2) != mark) {
+                return new int[]{0, 2};
+            } else if (Board.getMarkAt(0, 2) == Main.playerOne.getMark()
+                    & Board.getMarkAt(2, 0) == Main.playerOne.getMark() & Board.getMarkAt(1, 1) != mark) {
+                return new int[]{1, 1};
             }
         }
         return null;
