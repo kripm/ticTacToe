@@ -1,7 +1,7 @@
 package myself;
 
-public class Board {
-    private static char[][] gameBoard = new char[3][3];
+class Board {
+    private static final char[][] gameBoard = new char[3][3];
     private static int turn = 1;
     static GameState gameState = GameState.UNFINISHED;
 
@@ -75,6 +75,10 @@ public class Board {
         current();
         gameState = checkWinOrDraw();
         gameState.check(gameState);
+    }
+
+    static char getMarkAt(int i, int j) {
+        return gameBoard[i][j];
     }
 
     static boolean checkPossibleMove(int X, int Y) {
