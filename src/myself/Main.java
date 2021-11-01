@@ -5,11 +5,13 @@ import java.util.Scanner;
 public class Main {
     static Scanner sc = new Scanner(System.in);
     static boolean playing = true;
+    public static Player playerOne = new Player();
 
     public static void main(String[] args) {
         Difficulty d = Difficulty.EASY;
         EasyAI easyAI = new EasyAI();
-        final Player playerOne = new Player();
+        MediumAI mediumAI = new MediumAI();
+
 
         while (playing) {
             switch (start()) {
@@ -29,6 +31,26 @@ public class Main {
                     playerOne.setMark('O');
                     while (Board.gameState == GameState.UNFINISHED) {
                         Board.play(playerOne, easyAI);
+                    }
+                    Board.gameState = GameState.UNFINISHED;
+                    break;
+
+                case ("PVM"):
+                    Board.start();
+                    playerOne.setMark('X');
+                    mediumAI.setMark('O');
+                    while (Board.gameState == GameState.UNFINISHED) {
+                        Board.play(playerOne, mediumAI);
+                    }
+                    Board.gameState = GameState.UNFINISHED;
+                    break;
+
+                case ("MVP"):
+                    Board.start();
+                    mediumAI.setMark('X');
+                    playerOne.setMark('O');
+                    while (Board.gameState == GameState.UNFINISHED) {
+                        Board.play(playerOne, mediumAI);
                     }
                     Board.gameState = GameState.UNFINISHED;
                     break;
@@ -75,6 +97,12 @@ public class Main {
         } else if (args[2].equalsIgnoreCase("user")
                 && args[1].equalsIgnoreCase("easy")) {
             gameMode = "EVP";
+        } else if (args[1].equalsIgnoreCase("user")
+                && args[2].equalsIgnoreCase("medium")) {
+            gameMode = "PVM";
+        } else if (args[2].equalsIgnoreCase("user")
+                && args[1].equalsIgnoreCase("medium")) {
+            gameMode = "MVP";
         } else if (args[1].equalsIgnoreCase("user")
                 && args[2].equalsIgnoreCase("user")) {
             gameMode = "PVP";
