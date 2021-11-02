@@ -18,10 +18,6 @@ public class EasyAI extends AI {
         } while (!moveComplete);
     }
 
-    public char getMark() {
-        return mark;
-    }
-
     void isX(boolean answer) {
          if (answer) {
              this.mark = 'X';
