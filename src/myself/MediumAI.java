@@ -71,14 +71,11 @@ public class MediumAI extends AI {
         return null;
     }
 
-    char getMark() {
-        return mark;
-    }
-
      void isX(boolean answer) {
          if (answer) {
              this.mark = 'X';
              this.enemyMark = 'O';
+             Board.setTurn(0);
          } else {
              this.mark = 'O';
              this.enemyMark = 'X';
