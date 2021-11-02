@@ -36,14 +36,10 @@ class Board {
         System.out.println("---------");
     }
 
-    static void play(Player playerOne, AI ai) { // credits to b4ara for his wisdom.
-        if (playerOne.getMark() == 'X' & turn == 1) {
+    static void play(Player playerOne, AI ai) { // b.
+        if (turn == 1) {
             playerOne.move();
-        } else if (ai.getMark() == 'X' & turn == 1) {
-            ai.move();
-        } else if (playerOne.getMark() == 'O' & turn == 0) {
-            playerOne.move();
-        } else if (ai.getMark() == 'O' & turn == 0) {
+        } else if (turn == 0) {
             ai.move();
         }
     }
@@ -56,7 +52,7 @@ class Board {
         }
     }
 
-    public static void play(AI ai, AI aii) {
+     static void play(AI ai, AI aii) {
         if (turn == 1) {
             ai.move();
         } else if (turn == 0) {
@@ -79,6 +75,10 @@ class Board {
 
     static char getMarkAt(int i, int j) {
         return gameBoard[i][j];
+    }
+    
+    static void setTurn(int number) {
+        turn = number;
     }
 
     static boolean checkPossibleMove(int X, int Y) {
