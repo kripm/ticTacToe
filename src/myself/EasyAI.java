@@ -25,6 +25,7 @@ public class EasyAI extends AI {
     void isX(boolean answer) {
          if (answer) {
              this.mark = 'X';
+             Board.setTurn(0);
          } else {
              this.mark = 'O';
          }
