@@ -111,7 +111,7 @@ class Board {
 
         if (gameBoard[0] == mark && gameBoard[4] == mark && gameBoard[8] == mark) {
             return true;
-        } else return gameBoard[2] == mark & gameBoard[4] == mark & gameBoard[6] == mark;
+        } else return gameBoard[2] == mark && gameBoard[4] == mark && gameBoard[6] == mark;
     }
 
     static boolean checkDraw() {
