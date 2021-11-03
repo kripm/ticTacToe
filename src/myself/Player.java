@@ -4,30 +4,18 @@ import java.util.Scanner;
 
 public class Player {
     private char mark;
+    static Scanner sc = new Scanner(System.in);
 
     void move() {
-        static Scanner sc = new Scanner(System.in);
         boolean validInput = false;
         while (!validInput) {
             try {
-                int count = 0;
-                System.out.println("Enter the coordinates: ");
-                String cords = sc.nextLine().strip();
-                String[] splitNumber = cords.split(" ");
-                int[] numberCord = new int[splitNumber.length];
-                for (String a : splitNumber) {
-                    int parsedInteger = Integer.parseInt(a);
-                    if (parsedInteger > 3 | parsedInteger < 1) {
-                        throw new IndexOutOfBoundsException();
-                    } else {
-                        numberCord[count] = parsedInteger - 1;
-                        count++;
-                    }
-                }
-                if (!Board.checkPossibleMove(numberCord[0], numberCord[1])) {
+                System.out.println("Enter the square number: ");
+                int square = sc.nextInt();
+                if (!Board.checkPossibleMove(square)) {
                     System.out.println("This cell is occupied! Choose another one!");
                 } else {
-                    Board.place(numberCord[0], numberCord[1]);
+                    Board.place(square, mark);
                     validInput = true;
                 }
             } catch (IndexOutOfBoundsException e) {
@@ -37,10 +25,7 @@ public class Player {
             }
         }
     }
-    
-    char getMark() {
-        return mark;
-    }
+
 
     void isX(boolean answer) {
         if (answer) {
