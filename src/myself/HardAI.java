@@ -8,58 +8,52 @@ public class HardAI extends AI {
     boolean isMax;
 
     void move() {
-        moveInt = bestMove();
-        Board.place(moveInt, permanentMark);
-    }
-
-    int bestMove() {
-        double bestScore;
+        double bestScore = 0;
+        char[] cloned = Board.getGameBoard();
 
         if (mark == 'X') {
             isMax = true;
-            bestScore =  Double.NEGATIVE_INFINITY;
+            bestScore = Double.NEGATIVE_INFINITY;
         } else {
             isMax = false;
             bestScore = Double.POSITIVE_INFINITY;
         }
 
         for (int i = 0; i < 9; i++) {
-            if (Board.getMarkAt(i) == ' ') {
-                Board.setMarkAt(i, mark);
-                double currentScore = minimax(Board.getGameBoard(), 0, isMax);
-                Board.setMarkAt(i, ' ');
+            if (cloned[i] == ' ') {
+                cloned[i] = mark;
+                mark = swap(mark);
+                double currentScore = minimax(cloned, 0, !isMax);
+                cloned[i] = ' ';
                 if ((isMax && currentScore > bestScore) || (!isMax && currentScore < bestScore)) {
                     bestScore = currentScore;
                     moveInt = i;
-                } 
+                    System.out.println(bestScore + " for move: " + i);
+                }
             }
         }
 
-        return moveInt;
+        Board.place(moveInt, permanentMark);
     }
 
-
-    double score = 0;
     double minimax(char[] board, double depth, boolean isMaximising) {
-        if (Board.checkWin('X')) {
-            //score = (double) Board.emptyIndexes() + 1;
-            return 10 - depth;
-        } else if (Board.checkWin('O')) {
-            //score = -1 * (double) (Board.emptyIndexes() + 1);
-            return -10 + depth;
-        } else if (Board.checkDraw()) {
-            score = 0;
-            return score;
+
+        if (checkWin('X', board)) {
+            return (double) Board.emptyIndexes() + 1;
+        } else if (checkWin('O', board)) {
+            return -1 * (double) (Board.emptyIndexes() + 1);
+        } else if (checkDraw(board)) {
+            return 0;
         }
 
         if (isMaximising) {
             double bestScore = Double.NEGATIVE_INFINITY;
             for (int i = 0; i < 9; i++) {
-                if (Board.getMarkAt(i) == ' ') {
-                    Board.setMarkAt(i, mark);
+                if (board[i] == ' ') {
+                    board[i] = mark;
                     mark = swap(mark);
-                    score = minimax(board, depth + 1, false);
-                    Board.setMarkAt(i, ' ');
+                    double score = minimax(board, depth + 1, false);
+                    board[i] = ' ';
                     if (score > bestScore) {
                         bestScore = score;
                     }
@@ -69,11 +63,11 @@ public class HardAI extends AI {
         } else {
             double bestScore = Double.POSITIVE_INFINITY;
             for (int i = 0; i < 9; i++) {
-                if (Board.getMarkAt(i) == ' ') {
-                    Board.setMarkAt(i, otherMark); 
-                    otherMark = swap(otherMark);
-                    score = minimax(board, depth + 1, true);
-                    Board.setMarkAt(i, ' ');
+                if (board[i] == ' ') {
+                    board[i] = mark;
+                    mark = swap(mark);
+                    double score = minimax(board, depth + 1, true);
+                    board[i] = ' ';
                     if (score < bestScore) {
                         bestScore = score;
                     }
@@ -101,5 +95,38 @@ public class HardAI extends AI {
         } else {
             return 'X';
         }
+    }
+
+    boolean swap(boolean a) {
+        return !a;
+    }
+
+    boolean checkWin(char mark, char[] board) {
+        int index = 0;
+
+        for (int rowOrCol = 0; rowOrCol < 3; rowOrCol++) {
+            if ((board[index] == mark && board[index + 1] == mark && board[index + 2] == mark)
+                    || (board[rowOrCol] == mark && board[rowOrCol + 3] == mark && board[rowOrCol + 6] == mark)) {
+                return true;
+            }
+            index += 3;
+        }
+
+        if (board[0] == mark && board[4] == mark && board[8] == mark) {
+            return true;
+        } else
+            return board[2] == mark && board[4] == mark && board[6] == mark;
+    }
+
+    boolean checkDraw(char[] board) {
+        boolean isFull = true;
+
+        for (char character : board) {
+            if (character == ' ') {
+                isFull = false;
+                break;
+            }
+        }
+        return isFull;
     }
 }
