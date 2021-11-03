@@ -9,10 +9,9 @@ public class EasyAI extends AI {
         Random rn = new Random();
         boolean moveComplete = false;
         do {
-            int X = rn.nextInt(3);
-            int Y = rn.nextInt(3);
-            if (Board.checkPossibleMove(X, Y)) {
-                Board.place(X, Y, mark);
+            int square = rn.nextInt(9);
+            if (Board.checkPossibleMove(square)) {
+                Board.place(square, mark);
                 moveComplete = true;
             }
         } while (!moveComplete);
