@@ -5,7 +5,6 @@ class Board {
     private static int turn = 1;
     static GameState gameState = GameState.UNFINISHED;
 
-    
     static void start() {
         turn = 1;
         createNew();
@@ -14,7 +13,7 @@ class Board {
 
     private static void createNew() {
         for (int i = 0; i < 9; i++) {
-                gameBoard[i] = (' ');
+            gameBoard[i] = (' ');
         }
     }
 
@@ -52,15 +51,13 @@ class Board {
         }
     }
 
-     static void play(AI ai, AI aii) {
+    static void play(AI ai, AI aii) {
         if (turn == 1) {
             ai.move();
         } else if (turn == 0) {
             aii.move();
         }
     }
-
-
 
     static void place(int square, char mark) {
         if (turn == 1) {
@@ -95,15 +92,13 @@ class Board {
         return counter;
     }
 
-
-
     static boolean checkWin(char mark) {
         int index = 0;
 
         for (int rowOrCol = 0; rowOrCol < 3; rowOrCol++) {
-            if (gameBoard[index] == mark && gameBoard[index + 1] == mark && gameBoard[index + 2] == mark) {
-                return true;
-            } else if (gameBoard[rowOrCol] == mark && gameBoard[rowOrCol + 3] == mark && gameBoard[rowOrCol + 6] == mark) {
+            if ((gameBoard[index] == mark && gameBoard[index + 1] == mark && gameBoard[index + 2] == mark)
+                    || (gameBoard[rowOrCol] == mark && gameBoard[rowOrCol + 3] == mark
+                            && gameBoard[rowOrCol + 6] == mark)) {
                 return true;
             }
             index += 3;
@@ -111,7 +106,8 @@ class Board {
 
         if (gameBoard[0] == mark && gameBoard[4] == mark && gameBoard[8] == mark) {
             return true;
-        } else return gameBoard[2] == mark && gameBoard[4] == mark && gameBoard[6] == mark;
+        } else
+            return gameBoard[2] == mark && gameBoard[4] == mark && gameBoard[6] == mark;
     }
 
     static boolean checkDraw() {
