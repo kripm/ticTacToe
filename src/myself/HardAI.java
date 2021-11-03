@@ -1,72 +1,53 @@
 package myself;
 
-import java.util.Arrays;
-
 public class HardAI extends AI {
     private char mark;
-    private char enemyMark;
+    private char permanentMark;
+    private char otherMark;
+    int moveInt = 0;
+    boolean isMax;
 
     void move() {
-        int move;
+        moveInt = bestMove();
+        Board.place(moveInt, permanentMark);
+    }
+
+    int bestMove() {
+        double bestScore;
 
         if (mark == 'X') {
-            move = bestMoveForX();
+            isMax = true;
+            bestScore =  Double.NEGATIVE_INFINITY;
         } else {
-            move = bestMoveForO();
+            isMax = false;
+            bestScore = Double.POSITIVE_INFINITY;
         }
-
-        Board.place(move, mark);
-    }
-
-    int move = 0;
-    int bestMoveForX() {
-        double bestScore = Double.NEGATIVE_INFINITY;
 
         for (int i = 0; i < 9; i++) {
             if (Board.getMarkAt(i) == ' ') {
                 Board.setMarkAt(i, mark);
-                double score = minimax(Board.getGameBoard(), 0, true);
-                Board.getGameBoard()[i] = ' ';
-                if (score > bestScore) {
-                    bestScore = score;
-                    move = i;
-                }
+                double currentScore = minimax(Board.getGameBoard(), 0, isMax);
+                Board.setMarkAt(i, ' ');
+                if ((isMax && currentScore > bestScore) || (!isMax && currentScore < bestScore)) {
+                    bestScore = currentScore;
+                    moveInt = i;
+                } 
             }
         }
-        //System.out.println(move);
-        return move;
+
+        return moveInt;
     }
 
-    int bestMoveForO() {
-        double bestScore = Double.POSITIVE_INFINITY;
-
-        for (int i = 0; i < 9; i++) {
-            if (Board.getMarkAt(i) == ' ') {
-                Board.setMarkAt(i, mark);
-                System.out.println("g");
-                System.out.println(Arrays.toString(Board.getGameBoard()));
-                double score = minimax(Board.getGameBoard(), 0, false);
-                Board.getGameBoard()[i] = ' ';
-                if (score < bestScore) {
-                    bestScore = score;
-                    move = i;
-                }
-            }
-        }
-        System.out.println(move);
-        return move;
-    }
 
     double score = 0;
     double minimax(char[] board, double depth, boolean isMaximising) {
-
         if (Board.checkWin('X')) {
-            score = Board.emptyIndexes() + 1;
-            return score;
+            //score = (double) Board.emptyIndexes() + 1;
+            return 10 - depth;
         } else if (Board.checkWin('O')) {
-            score = -1 * (Board.emptyIndexes() + 1);
-            return score;
-        } else if (Board.emptyIndexes() == 0) {
+            //score = -1 * (double) (Board.emptyIndexes() + 1);
+            return -10 + depth;
+        } else if (Board.checkDraw()) {
             score = 0;
             return score;
         }
@@ -74,12 +55,12 @@ public class HardAI extends AI {
         if (isMaximising) {
             double bestScore = Double.NEGATIVE_INFINITY;
             for (int i = 0; i < 9; i++) {
-                if (board[i] == ' ') {
-                    board[i] = mark;
+                if (Board.getMarkAt(i) == ' ') {
+                    Board.setMarkAt(i, mark);
+                    mark = swap(mark);
                     score = minimax(board, depth + 1, false);
-                    board[i] = ' ';
+                    Board.setMarkAt(i, ' ');
                     if (score > bestScore) {
-                        //System.out.println(score);
                         bestScore = score;
                     }
                 }
@@ -88,10 +69,11 @@ public class HardAI extends AI {
         } else {
             double bestScore = Double.POSITIVE_INFINITY;
             for (int i = 0; i < 9; i++) {
-                if (board[i] == ' ') {
-                    board[i] = enemyMark;
+                if (Board.getMarkAt(i) == ' ') {
+                    Board.setMarkAt(i, otherMark); 
+                    otherMark = swap(otherMark);
                     score = minimax(board, depth + 1, true);
-                    board[i] = ' ';
+                    Board.setMarkAt(i, ' ');
                     if (score < bestScore) {
                         bestScore = score;
                     }
@@ -104,10 +86,20 @@ public class HardAI extends AI {
     void isX(boolean answer) {
         if (answer) {
             this.mark = 'X';
-            this.enemyMark = 'O';
+            this.permanentMark = 'X';
+            this.otherMark = 'O';
         } else {
             this.mark = 'O';
-            this.enemyMark = 'X';
+            this.permanentMark = 'O';
+            this.otherMark = 'X';
+        }
+    }
+
+    char swap(char a) {
+        if (a == 'X') {
+            return 'O';
+        } else {
+            return 'X';
         }
     }
 }
