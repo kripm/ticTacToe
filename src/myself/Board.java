@@ -1,7 +1,7 @@
 package myself;
 
 class Board {
-    private static final char[][] gameBoard = new char[3][3];
+    private static final char[] gameBoard = new char[9];
     private static int turn = 1;
     static GameState gameState = GameState.UNFINISHED;
 
@@ -13,23 +13,23 @@ class Board {
     }
 
     private static void createNew() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                gameBoard[i][j] = (' ');
-            }
+        for (int i = 0; i < 9; i++) {
+                gameBoard[i] = (' ');
         }
     }
 
     private static void current() {
         System.out.println("---------");
+        int counter = 0;
         for (int i = 0; i < 3; i++) {
             System.out.print("| ");
             for (int j = 0; j < 3; j++) {
-                if (gameBoard[i][j] == ' ') {
+                if (gameBoard[counter] == ' ') {
                     System.out.print("  ");
                 } else {
-                    System.out.print(gameBoard[i][j] + " ");
+                    System.out.print(gameBoard[counter] + " ");
                 }
+                counter++;
             }
             System.out.println("|");
         }
@@ -60,66 +60,85 @@ class Board {
         }
     }
 
-    static void place(int X, int Y, char mark) {
+
+
+    static void place(int square, char mark) {
         if (turn == 1) {
-            gameBoard[X][Y] = mark;
+            gameBoard[square] = mark;
             turn--;
         } else if (turn == 0) {
-            gameBoard[X][Y] = mark;
+            gameBoard[square] = mark;
             turn++;
         }
         current();
-        gameState = checkWinOrDraw();
+        if (checkWin('X')) {
+            gameState = GameState.X_WIN;
+        } else if (checkWin('O')) {
+            gameState = GameState.O_WIN;
+        } else if (checkDraw()) {
+            gameState = GameState.DRAW;
+        }
         gameState.check(gameState);
     }
 
-    static char getMarkAt(int i, int j) {
-        return gameBoard[i][j];
+    static boolean checkPossibleMove(int square) {
+        return gameBoard[square] == ' ';
     }
-    
+
+    static int emptyIndexes() {
+        int counter = 0;
+        for (int i = 0; i < 9; i++) {
+            if (gameBoard[i] == ' ') {
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+
+
+    static boolean checkWin(char mark) {
+        int index = 0;
+
+        for (int rowOrCol = 0; rowOrCol < 3; rowOrCol++) {
+            if (gameBoard[index] == mark && gameBoard[index + 1] == mark && gameBoard[index + 2] == mark) {
+                return true;
+            } else if (gameBoard[rowOrCol] == mark && gameBoard[rowOrCol + 3] == mark && gameBoard[rowOrCol + 6] == mark) {
+                return true;
+            }
+            index += 3;
+        }
+
+        if (gameBoard[0] == mark && gameBoard[4] == mark && gameBoard[8] == mark) {
+            return true;
+        } else return gameBoard[2] == mark & gameBoard[4] == mark & gameBoard[6] == mark;
+    }
+
+    static boolean checkDraw() {
+        boolean isFull = true;
+
+        for (char character : gameBoard) {
+            if (character == ' ') {
+                isFull = false;
+                break;
+            }
+        }
+        return isFull;
+    }
+
     static void setTurn(int number) {
         turn = number;
     }
 
-    static boolean checkPossibleMove(int X, int Y) {
-        return gameBoard[X][Y] == ' ';
+    static char getMarkAt(int i) {
+        return gameBoard[i];
     }
 
-    static GameState checkWinOrDraw() {
-        boolean isNotFull = false;
+    static void setMarkAt(int i, char mark) {
+        gameBoard[i] = mark;
+    }
 
-        for (char[] character : gameBoard) {
-            for (char character1 : character) {
-                if (character1 == ' ') {
-                    isNotFull = true;
-                    break;
-                }
-            }
-        }
-
-        for (int i = 0; i < 3; i++) {
-            int j = 0;
-            if (gameBoard[i][j] == 'X' & gameBoard[i][j + 1] == 'X' & gameBoard[i][j + 2] == 'X') {
-                return GameState.X_WIN;
-            } else if (gameBoard[j][i] == 'X' & gameBoard[j + 1][i] == 'X' & gameBoard[j + 2][i] == 'X') {
-                return GameState.X_WIN;
-            } else if (gameBoard[i][j] == 'O' & gameBoard[i][j + 1] == 'O' & gameBoard[i][j + 2] == 'O') {
-                return GameState.O_WIN;
-            } else if (gameBoard[j][i] == 'O' & gameBoard[j + 1][i] == 'O' & gameBoard[j + 2][i] == 'O') {
-                return GameState.O_WIN;
-            }
-        }
-        if (gameBoard[0][0] == 'X' & gameBoard[1][1] == 'X' & gameBoard[2][2] == 'X') {
-            return GameState.X_WIN;
-        } else if (gameBoard[0][2] == 'X' & gameBoard[1][1] == 'X' & gameBoard[2][0] == 'X') {
-            return GameState.X_WIN;
-        } else if (gameBoard[0][0] == 'O' & gameBoard[1][1] == 'O' & gameBoard[2][2] == 'O') {
-            return GameState.O_WIN;
-        } else if (gameBoard[0][2] == 'O' & gameBoard[1][1] == 'O' & gameBoard[2][0] == 'O') {
-            return GameState.O_WIN;
-        } else if (isNotFull){
-            return GameState.UNFINISHED;
-        }
-        return GameState.DRAW;
+    static char[] getGameBoard() {
+        return gameBoard;
     }
 }
