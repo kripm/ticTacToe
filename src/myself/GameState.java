@@ -22,9 +22,3 @@ public enum GameState {
         }
     }
 }
-
-enum Difficulty {
-    EASY,
-    MEDIUM,
-    HARD;
-}
