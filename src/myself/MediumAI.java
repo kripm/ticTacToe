@@ -1,6 +1,5 @@
 package myself;
 
-//import java.util.Arrays;
 import java.util.Random;
 
 public class MediumAI extends AI {
@@ -11,64 +10,55 @@ public class MediumAI extends AI {
     void move() {
         boolean moveComplete = false;
         do {
-            if (checkThreat() != null) {
-                //System.out.println("Threat at "+ Arrays.toString(checkThreat()));
-                Board.place(checkThreat()[0], checkThreat()[1], mark);
+            if (checkThreat() != -1) {
+                //System.out.println("Threat at "+ checkThreat());
+                Board.place(checkThreat(), mark);
                 moveComplete = true;
             } else {
-                int X = rn.nextInt(3);
-                int Y = rn.nextInt(3);
-                if (Board.checkPossibleMove(X, Y)) {
-                    Board.place(X, Y, mark);
+                int square = rn.nextInt(9);
+                if (Board.checkPossibleMove(square)) {
+                    Board.place(square, mark);
                     moveComplete = true;
                 }
             }
         } while (!moveComplete);
     }
 
-    int[] checkThreat() { // very.. convoluted. i know.
-        for (int i = 0; i < 3; i++) {
-            if (Board.getMarkAt(i, 0) == enemyMark
-                    & Board.getMarkAt(i, 1) == enemyMark & Board.getMarkAt(i, 2) == ' ') {
-                return new int[]{i, 2};
-            } else if (Board.getMarkAt(i, 1) == enemyMark
-                    & Board.getMarkAt(i, 2) == enemyMark & Board.getMarkAt(i, 0) == ' ') {
-                return new int[]{i, 0};
-            } else if (Board.getMarkAt(i, 0) == enemyMark
-                    & Board.getMarkAt(i, 2) == enemyMark & Board.getMarkAt(i, 1) == ' ') {
-                return new int[]{i, 1};
-            } else if (Board.getMarkAt(0, i) == enemyMark
-                    & Board.getMarkAt(1, i) == enemyMark & Board.getMarkAt(2, i) == ' ') {
-                return new int[]{2, i};
-            } else if (Board.getMarkAt(1, i) == enemyMark
-                    & Board.getMarkAt(2, i) == enemyMark & Board.getMarkAt(0, i) == ' ') {
-                return new int[]{0, i};
-            } else if (Board.getMarkAt(0, i) == enemyMark
-                    & Board.getMarkAt(2, i) == enemyMark & Board.getMarkAt(1, i) == ' ') {
-                return new int[]{1, i};
+    int checkThreat() { // very.. convoluted. i know.
+        int index = 0;
+        for (int rowOrCol = 0; rowOrCol < 3; rowOrCol++) {
+            if (Board.getMarkAt(index) == enemyMark & Board.getMarkAt(index + 1) == enemyMark) {
+                return index + 2;
+            } else if (Board.getMarkAt(index + 1) == enemyMark & Board.getMarkAt(index + 2) == enemyMark) {
+                return index;
+            } else if (Board.getMarkAt(index) == enemyMark & Board.getMarkAt(index + 2) == enemyMark) {
+                return ++index;
+            } else if (Board.getMarkAt(rowOrCol) == enemyMark & Board.getMarkAt(rowOrCol + 3) == enemyMark) {
+                return rowOrCol + 6;
             }
-
-            if (Board.getMarkAt(0, 0) == enemyMark
-                    & Board.getMarkAt(1, 1) == enemyMark & Board.getMarkAt(2, 2) == ' ') {
-                return new int[]{2, 2};
-            } else if (Board.getMarkAt(1, 1) == enemyMark
-                    & Board.getMarkAt(2, 2) == enemyMark & Board.getMarkAt(0, 0) == ' ') {
-                return new int[]{0, 0};
-            } else if (Board.getMarkAt(0, 0) == enemyMark
-                    & Board.getMarkAt(2, 2) == enemyMark & Board.getMarkAt(1, 1) == ' ') {
-                return new int[]{1, 1};
-            } else if (Board.getMarkAt(0, 2) == enemyMark
-                    & Board.getMarkAt(1, 1) == enemyMark & Board.getMarkAt(2, 0) == ' ') {
-                return new int[]{2, 0};
-            } else if (Board.getMarkAt(2, 0) == enemyMark
-                    & Board.getMarkAt(1, 1) == enemyMark & Board.getMarkAt(0, 2) == ' ') {
-                return new int[]{0, 2};
-            } else if (Board.getMarkAt(0, 2) == enemyMark
-                    & Board.getMarkAt(2, 0) == enemyMark & Board.getMarkAt(1, 1) == ' ') {
-                return new int[]{1, 1};
-            }
+            index += 3;
         }
-        return null;
+
+        if (Board.getMarkAt(0) == enemyMark
+                & Board.getMarkAt(4) == enemyMark & Board.getMarkAt(8) == ' ') {
+            return 8;
+        } else if (Board.getMarkAt(4) == enemyMark
+                & Board.getMarkAt(8) == enemyMark & Board.getMarkAt(0) == ' ') {
+            return 0;
+        } else if (Board.getMarkAt(0) == enemyMark
+                & Board.getMarkAt(8) == enemyMark & Board.getMarkAt(4) == ' ') {
+            return 4;
+        } else if (Board.getMarkAt(2) == enemyMark
+                & Board.getMarkAt(4) == enemyMark & Board.getMarkAt(6) == ' ') {
+            return 6;
+        } else if (Board.getMarkAt(4) == enemyMark
+                & Board.getMarkAt(6) == enemyMark & Board.getMarkAt(2) == ' ') {
+            return 2;
+        } else if (Board.getMarkAt(2) == enemyMark
+                & Board.getMarkAt(6) == enemyMark & Board.getMarkAt(4) == ' ') {
+            return 4;
+        }
+        return -1;
     }
 
      void isX(boolean answer) {
