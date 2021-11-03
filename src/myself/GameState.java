@@ -17,8 +17,6 @@ public enum GameState {
             case DRAW:
                 System.out.println("Draw");
                 break;
-            case UNFINISHED:
-                break;
         }
     }
 }
