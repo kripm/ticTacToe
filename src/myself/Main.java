@@ -3,18 +3,20 @@ package myself;
 import java.util.Scanner;
 
 public class Main {
-    static Scanner sc = new Scanner(System.in);
     static Player playerOne = new Player();
     static Player playerTwo = new Player();
     static EasyAI easyAI = new EasyAI();
     static EasyAI easyAII = new EasyAI();
     static MediumAI mediumAI = new MediumAI();
     static MediumAI mediumAII = new MediumAI();
+    static HardAI hardAI = new HardAI();
+    static HardAI hardAII = new HardAI();
     static private boolean playing = true;
 
     public static void main(String[] args) {
         while (playing) {
             reset();
+            Board.emptyIndexes();
             switch (start()) {
                 case ("PVE"):
                     Board.start();
@@ -56,6 +58,27 @@ public class Main {
                     reset();
                     break;
 
+                case ("PVH"):
+                    Board.start();
+                    playerOne.isX(true);
+                    while (Board.gameState == GameState.UNFINISHED) {
+                        Board.play(playerOne, hardAI);
+                    }
+                    Board.gameState = GameState.UNFINISHED;
+                    reset();
+                    break;
+
+                case ("HVP"):
+                    Board.start();
+                    hardAI.isX(true);
+                    Board.setTurn(0);
+                    while (Board.gameState == GameState.UNFINISHED) {
+                        Board.play(playerOne, hardAI);
+                    }
+                    Board.gameState = GameState.UNFINISHED;
+                    reset();
+                    break;
+
                 case ("PVP"):
                     Board.start();
                     playerOne.isX(true);
@@ -69,6 +92,7 @@ public class Main {
                 case ("EVE"):
                     Board.start();
                     easyAI.isX(true);
+                    Board.setTurn(1);
                     while (Board.gameState == GameState.UNFINISHED) {
                         Board.play(easyAI, easyAII);
                     }
@@ -78,6 +102,7 @@ public class Main {
                 case ("EVM"):
                     Board.start();
                     easyAI.isX(true);
+                    Board.setTurn(1);
                     while (Board.gameState == GameState.UNFINISHED) {
                         Board.play(easyAI, mediumAI);
                     }
@@ -88,6 +113,7 @@ public class Main {
                 case ("MVE"):
                     Board.start();
                     mediumAI.isX(true);
+                    Board.setTurn(1);
                     while (Board.gameState == GameState.UNFINISHED) {
                         Board.play(easyAI, mediumAI);
                     }
@@ -98,6 +124,7 @@ public class Main {
                 case ("MVM"):
                     Board.start();
                     mediumAI.isX(true);
+                    Board.setTurn(1);
                     while (Board.gameState == GameState.UNFINISHED) {
                         Board.play(mediumAI, mediumAII);
                     }
@@ -132,6 +159,12 @@ public class Main {
                 && args[1].equalsIgnoreCase("medium")) {
             gameMode = "MVP";
         } else if (args[1].equalsIgnoreCase("user")
+                && args[2].equalsIgnoreCase("hard")) {
+            gameMode = "PVH";
+        } else if (args[2].equalsIgnoreCase("user")
+                && args[1].equalsIgnoreCase("hard")) {
+            gameMode = "HVP";
+        } else if (args[1].equalsIgnoreCase("user")
                 && args[2].equalsIgnoreCase("user")) {
             gameMode = "PVP";
         } else if (args[1].equalsIgnoreCase("easy")
@@ -140,12 +173,27 @@ public class Main {
         }  else if (args[1].equalsIgnoreCase("easy")
                 && args[2].equalsIgnoreCase("medium")) {
             gameMode = "EVM";
+        } else if (args[1].equalsIgnoreCase("easy")
+                && args[2].equalsIgnoreCase("hard")) {
+            gameMode = "EVH";
         }  else if (args[2].equalsIgnoreCase("easy")
                 && args[1].equalsIgnoreCase("medium")) {
             gameMode = "MVE";
         } else if (args[1].equalsIgnoreCase("medium")
                 && args[2].equalsIgnoreCase("medium")) {
             gameMode = "MVM";
+        } else if (args[1].equalsIgnoreCase("medium")
+                && args[2].equalsIgnoreCase("hard")) {
+            gameMode = "MVH";
+        } else if (args[1].equalsIgnoreCase("hard")
+                && args[2].equalsIgnoreCase("hard")) {
+            gameMode = "HVH";
+        } else if (args[1].equalsIgnoreCase("hard")
+                    && args[2].equalsIgnoreCase("easy")) {
+            gameMode = "HVE";
+        } else if (args[1].equalsIgnoreCase("hard")
+                && args[2].equalsIgnoreCase(" medium")) {
+            gameMode = "HVM";
         }
         return gameMode;
     }
@@ -157,9 +205,12 @@ public class Main {
         easyAII.isX(false);
         mediumAI.isX(false);
         mediumAII.isX(false);
+        hardAI.isX(false);
+        hardAII.isX(false);
     }
 
     static String[] takeInput() {
+        Scanner sc = new Scanner(System.in);
         boolean gotInput = false;
         String[] params = null;
        do {
