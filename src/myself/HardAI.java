@@ -11,7 +11,7 @@ public class HardAI extends AI {
         double bestScore = 0;
         char[] cloned = Board.getGameBoard();
 
-        if (mark == 'X') {
+        if (permanentMark == 'X') {
             isMax = true;
             bestScore = Double.NEGATIVE_INFINITY;
         } else {
@@ -24,11 +24,12 @@ public class HardAI extends AI {
                 cloned[i] = mark;
                 mark = swap(mark);
                 double currentScore = minimax(cloned, 0, !isMax);
+                mark = permanentMark;
                 cloned[i] = ' ';
                 if ((isMax && currentScore > bestScore) || (!isMax && currentScore < bestScore)) {
                     bestScore = currentScore;
                     moveInt = i;
-                    System.out.println(bestScore + " for move: " + i);
+                    // System.out.println(bestScore + " for move: " + i);
                 }
             }
         }
@@ -39,9 +40,9 @@ public class HardAI extends AI {
     double minimax(char[] board, double depth, boolean isMaximising) {
 
         if (checkWin('X', board)) {
-            return (double) Board.emptyIndexes() + 1;
+            return (double) emptyIndexes(board) + 1;
         } else if (checkWin('O', board)) {
-            return -1 * (double) (Board.emptyIndexes() + 1);
+            return -1 * (double) (emptyIndexes(board) + 1);
         } else if (checkDraw(board)) {
             return 0;
         }
@@ -129,4 +130,15 @@ public class HardAI extends AI {
         }
         return isFull;
     }
+
+    int emptyIndexes(char[] board) {
+        int counter = 0;
+        for (int i = 0; i < 9; i++) {
+            if (board[i] == ' ') {
+                counter++;
+            }
+        }
+        return counter;
+    }
+
 }
