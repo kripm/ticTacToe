@@ -11,7 +11,7 @@ public class MediumAI extends AI {
         boolean moveComplete = false;
         do {
             if (checkThreat() != -1) {
-                //System.out.println("Threat at "+ checkThreat());
+                // System.out.println("Threat at "+ checkThreat());
                 Board.place(checkThreat(), mark);
                 moveComplete = true;
             } else {
@@ -39,36 +39,29 @@ public class MediumAI extends AI {
             index += 3;
         }
 
-        if (Board.getMarkAt(0) == enemyMark
-                & Board.getMarkAt(4) == enemyMark & Board.getMarkAt(8) == ' ') {
+        if (Board.getMarkAt(0) == enemyMark & Board.getMarkAt(4) == enemyMark & Board.getMarkAt(8) == ' ') {
             return 8;
-        } else if (Board.getMarkAt(4) == enemyMark
-                & Board.getMarkAt(8) == enemyMark & Board.getMarkAt(0) == ' ') {
+        } else if (Board.getMarkAt(4) == enemyMark & Board.getMarkAt(8) == enemyMark & Board.getMarkAt(0) == ' ') {
             return 0;
-        } else if (Board.getMarkAt(0) == enemyMark
-                & Board.getMarkAt(8) == enemyMark & Board.getMarkAt(4) == ' ') {
+        } else if (Board.getMarkAt(0) == enemyMark & Board.getMarkAt(8) == enemyMark & Board.getMarkAt(4) == ' ') {
             return 4;
-        } else if (Board.getMarkAt(2) == enemyMark
-                & Board.getMarkAt(4) == enemyMark & Board.getMarkAt(6) == ' ') {
+        } else if (Board.getMarkAt(2) == enemyMark & Board.getMarkAt(4) == enemyMark & Board.getMarkAt(6) == ' ') {
             return 6;
-        } else if (Board.getMarkAt(4) == enemyMark
-                & Board.getMarkAt(6) == enemyMark & Board.getMarkAt(2) == ' ') {
+        } else if (Board.getMarkAt(4) == enemyMark & Board.getMarkAt(6) == enemyMark & Board.getMarkAt(2) == ' ') {
             return 2;
-        } else if (Board.getMarkAt(2) == enemyMark
-                & Board.getMarkAt(6) == enemyMark & Board.getMarkAt(4) == ' ') {
+        } else if (Board.getMarkAt(2) == enemyMark & Board.getMarkAt(6) == enemyMark & Board.getMarkAt(4) == ' ') {
             return 4;
         }
         return -1;
     }
 
-     void isX(boolean answer) {
-         if (answer) {
-             this.mark = 'X';
-             this.enemyMark = 'O';
-             Board.setTurn(0);
-         } else {
-             this.mark = 'O';
-             this.enemyMark = 'X';
-         }
+    void isX(boolean answer) {
+        if (answer) {
+            this.mark = 'X';
+            this.enemyMark = 'O';
+        } else {
+            this.mark = 'O';
+            this.enemyMark = 'X';
+        }
     }
 }
