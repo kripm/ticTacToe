@@ -29,7 +29,6 @@ public class HardAI extends AI {
                 if ((isMax && currentScore > bestScore) || (!isMax && currentScore < bestScore)) {
                     bestScore = currentScore;
                     moveInt = i;
-                    // System.out.println(bestScore + " for move: " + i);
                 }
             }
         }
@@ -117,6 +116,7 @@ public class HardAI extends AI {
             return true;
         } else
             return board[2] == mark && board[4] == mark && board[6] == mark;
+
     }
 
     boolean checkDraw(char[] board) {
