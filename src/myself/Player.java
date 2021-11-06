@@ -1,5 +1,6 @@
 package myself;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Player {
@@ -14,18 +15,22 @@ public class Player {
                 int square = sc.nextInt();
                 if (!Board.checkPossibleMove(square)) {
                     System.out.println("This cell is occupied! Choose another one!");
+                } else if (square < 0 || square > 8) {
+                    throw new IndexOutOfBoundsException();
                 } else {
                     Board.place(square, mark);
                     validInput = true;
                 }
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("Coordinates should be from 1 to 3!");
-            } catch (NumberFormatException e) {
+                System.out.println("Coordinates should be from 0 to 8!");
+            } catch (InputMismatchException e) {
                 System.out.println("You should enter numbers!");
+                sc.next(); // thank you stack overflow.
+            } catch (Exception e) {
+                System.out.println("Unknown error.");
             }
         }
     }
-
 
     void isX(boolean answer) {
         if (answer) {
@@ -35,4 +40,3 @@ public class Player {
         }
     }
 }
-
