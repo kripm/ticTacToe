@@ -1,34 +1,34 @@
 package myself;
 
-public class HardAI extends AI {
+public class HardAI implements AI {
     private char mark;
     private char permanentMark;
-    private char otherMark;
-    int moveInt = 0;
-    boolean isMax;
+    private static final int MAX_DEPTH = 6;
+    private char[] board = Board.gameBoard;
 
-    void move() {
-        double bestScore = 0;
-        char[] cloned = Board.getGameBoard();
+    public void move() {
+        boolean isMax;
+        int moveInt = 0;
+        int bestScore;
 
         if (permanentMark == 'X') {
             isMax = true;
-            bestScore = Double.NEGATIVE_INFINITY;
+            bestScore = Integer.MIN_VALUE;
         } else {
             isMax = false;
-            bestScore = Double.POSITIVE_INFINITY;
+            bestScore = Integer.MAX_VALUE;
         }
 
         for (int i = 0; i < 9; i++) {
-            if (cloned[i] == ' ') {
-                cloned[i] = mark;
+            if (board[i] == ' ') {
+                board[i] = mark;
                 mark = swap(mark);
-                double currentScore = minimax(cloned, 0, !isMax);
+                int currentScore = minimax(Board.gameBoard, MAX_DEPTH, !isMax);
                 mark = permanentMark;
-                cloned[i] = ' ';
+                board[i] = ' ';
                 if ((isMax && currentScore > bestScore) || (!isMax && currentScore < bestScore)) {
-                    bestScore = currentScore;
                     moveInt = i;
+                    bestScore = currentScore;
                 }
             }
         }
@@ -36,56 +36,47 @@ public class HardAI extends AI {
         Board.place(moveInt, permanentMark);
     }
 
-    double minimax(char[] board, double depth, boolean isMaximising) {
+    int minimax(char[] board, int depth, boolean isMaximising) {
+        int boardVal = evaluateBoard(board, depth);
 
-        if (checkWin('X', board)) {
-            return (double) emptyIndexes(board) + 1;
-        } else if (checkWin('O', board)) {
-            return -1 * (double) (emptyIndexes(board) + 1);
-        } else if (checkDraw(board)) {
-            return 0;
+        if (Math.abs(boardVal) > 0 || depth == 0 || !anyAvailableMove(board)) {
+            return boardVal;
         }
 
         if (isMaximising) {
-            double bestScore = Double.NEGATIVE_INFINITY;
+            int highestVal = Integer.MIN_VALUE;
             for (int i = 0; i < 9; i++) {
                 if (board[i] == ' ') {
                     board[i] = mark;
                     mark = swap(mark);
-                    double score = minimax(board, depth + 1, false);
+                    highestVal = Math.max(highestVal, minimax(board, depth - 1, false));
+                    mark = swap(mark);
                     board[i] = ' ';
-                    if (score > bestScore) {
-                        bestScore = score;
-                    }
                 }
             }
-            return bestScore;
+            return highestVal;
         } else {
-            double bestScore = Double.POSITIVE_INFINITY;
+            int lowestVal = Integer.MAX_VALUE;
             for (int i = 0; i < 9; i++) {
                 if (board[i] == ' ') {
                     board[i] = mark;
                     mark = swap(mark);
-                    double score = minimax(board, depth + 1, true);
+                    lowestVal = Math.min(lowestVal, minimax(board, depth - 1, true));
+                    mark = swap(mark);
                     board[i] = ' ';
-                    if (score < bestScore) {
-                        bestScore = score;
-                    }
                 }
             }
-            return bestScore;
+            return lowestVal;
         }
     }
 
-    void isX(boolean answer) {
+    public void isX(boolean answer) {
         if (answer) {
             this.mark = 'X';
             this.permanentMark = 'X';
-            this.otherMark = 'O';
         } else {
             this.mark = 'O';
             this.permanentMark = 'O';
-            this.otherMark = 'X';
         }
     }
 
@@ -101,44 +92,39 @@ public class HardAI extends AI {
         return !a;
     }
 
-    boolean checkWin(char mark, char[] board) {
+    int evaluateBoard(char[] board, int depth) {
         int index = 0;
 
         for (int rowOrCol = 0; rowOrCol < 3; rowOrCol++) {
-            if ((board[index] == mark && board[index + 1] == mark && board[index + 2] == mark)
-                    || (board[rowOrCol] == mark && board[rowOrCol + 3] == mark && board[rowOrCol + 6] == mark)) {
-                return true;
+            if ((board[index] == 'X' && board[index + 1] == 'X' && board[index + 2] == 'X')
+                    || (board[rowOrCol] == 'X' && board[rowOrCol + 3] == 'X' && board[rowOrCol + 6] == 'X')) {
+                return 10 + depth;
+            } else if ((board[index] == 'O' && board[index + 1] == 'O' && board[index + 2] == 'O')
+                    || (board[rowOrCol] == 'O' && board[rowOrCol + 3] == 'O' && board[rowOrCol + 6] == 'O')) {
+                return -10 - depth;
             }
             index += 3;
         }
 
-        if (board[0] == mark && board[4] == mark && board[8] == mark) {
-            return true;
-        } else
-            return board[2] == mark && board[4] == mark && board[6] == mark;
-
-    }
-
-    boolean checkDraw(char[] board) {
-        boolean isFull = true;
-
-        for (char character : board) {
-            if (character == ' ') {
-                isFull = false;
-                break;
-            }
+        if (board[0] == 'X' && board[4] == 'X' && board[8] == 'X') {
+            return 10 + depth;
+        } else if (board[0] == 'O' && board[4] == 'O' && board[8] == 'O') {
+            return -10 - depth;
+        } else if (board[2] == 'X' && board[4] == 'X' && board[6] == 'X') {
+            return 10 + depth;
+        } else if (board[2] == 'O' && board[4] == 'O' && board[6] == 'O') {
+            return -10 - depth;
         }
-        return isFull;
+        return 0;
     }
 
-    int emptyIndexes(char[] board) {
+    boolean anyAvailableMove(char[] board) {
         int counter = 0;
         for (int i = 0; i < 9; i++) {
             if (board[i] == ' ') {
                 counter++;
             }
         }
-        return counter;
+        return counter > 0;
     }
-
 }
