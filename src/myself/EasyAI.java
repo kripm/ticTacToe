@@ -3,10 +3,10 @@ package myself;
 import java.util.Random;
 
 public class EasyAI extends AI {
+    Random rn = new Random();
     private char mark;
-
+    
     void move() {
-        Random rn = new Random();
         boolean moveComplete = false;
         do {
             int square = rn.nextInt(9);
