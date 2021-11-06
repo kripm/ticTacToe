@@ -87,11 +87,7 @@ public class HardAI implements AI {
             return 'X';
         }
     }
-
-    boolean swap(boolean a) {
-        return !a;
-    }
-
+    
     int evaluateBoard(char[] board, int depth) {
         int index = 0;
 
