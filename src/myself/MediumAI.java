@@ -2,12 +2,12 @@ package myself;
 
 import java.util.Random;
 
-public class MediumAI extends AI {
+public class MediumAI implements AI {
     static Random rn = new Random();
     private char mark;
     private char enemyMark;
 
-    void move() {
+    public void move() {
         boolean moveComplete = false;
         do {
             if (checkThreat() != -1) {
@@ -21,6 +21,16 @@ public class MediumAI extends AI {
                 }
             }
         } while (!moveComplete);
+    }
+
+    public void isX(boolean answer) {
+        if (answer) {
+            this.mark = 'X';
+            this.enemyMark = 'O';
+        } else {
+            this.mark = 'O';
+            this.enemyMark = 'X';
+        }
     }
 
     int checkThreat() { // very.. convoluted. i know.
@@ -62,15 +72,5 @@ public class MediumAI extends AI {
             return 4;
         }
         return -1;
-    }
-
-    void isX(boolean answer) {
-        if (answer) {
-            this.mark = 'X';
-            this.enemyMark = 'O';
-        } else {
-            this.mark = 'O';
-            this.enemyMark = 'X';
-        }
     }
 }
