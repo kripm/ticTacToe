@@ -10,20 +10,26 @@ public class HardAI implements AI {
         boolean isMax;
         int moveInt = 0;
         int bestScore;
+        int alpha;
+        int beta;
 
         if (permanentMark == 'X') {
             isMax = true;
             bestScore = Integer.MIN_VALUE;
+            beta = Integer.MAX_VALUE;
+            alpha = Integer.MIN_VALUE;
         } else {
             isMax = false;
             bestScore = Integer.MAX_VALUE;
+            beta = Integer.MIN_VALUE;
+            alpha = Integer.MAX_VALUE;
         }
 
         for (int i = 0; i < 9; i++) {
             if (board[i] == ' ') {
                 board[i] = mark;
                 mark = swap(mark);
-                int currentScore = minimax(Board.gameBoard, MAX_DEPTH, !isMax);
+                int currentScore = minimax(Board.gameBoard, MAX_DEPTH, alpha, beta, !isMax);
                 mark = permanentMark;
                 board[i] = ' ';
                 if ((isMax && currentScore > bestScore) || (!isMax && currentScore < bestScore)) {
@@ -36,7 +42,7 @@ public class HardAI implements AI {
         Board.place(moveInt, permanentMark);
     }
 
-    int minimax(char[] board, int depth, boolean isMaximising) {
+    int minimax(char[] board, int depth, int alpha, int beta, boolean isMaximising) {
         int boardVal = evaluateBoard(board, depth);
 
         if (Math.abs(boardVal) > 0 || depth == 0 || !anyAvailableMove(board)) {
@@ -49,9 +55,13 @@ public class HardAI implements AI {
                 if (board[i] == ' ') {
                     board[i] = mark;
                     mark = swap(mark);
-                    highestVal = Math.max(highestVal, minimax(board, depth - 1, false));
+                    highestVal = Math.max(highestVal, minimax(board, depth - 1, alpha, beta, false));
                     mark = swap(mark);
                     board[i] = ' ';
+                    alpha = highestVal;
+                    if (beta <= alpha) {
+                        break;
+                    }
                 }
             }
             return highestVal;
@@ -61,9 +71,14 @@ public class HardAI implements AI {
                 if (board[i] == ' ') {
                     board[i] = mark;
                     mark = swap(mark);
-                    lowestVal = Math.min(lowestVal, minimax(board, depth - 1, true));
+                    lowestVal = Math.min(lowestVal, minimax(board, depth - 1, alpha, beta, true));
                     mark = swap(mark);
                     board[i] = ' ';
+                    beta = lowestVal;
+                    if (beta <= alpha) {
+                        break;
+                    }
+
                 }
             }
             return lowestVal;
@@ -87,7 +102,7 @@ public class HardAI implements AI {
             return 'X';
         }
     }
-    
+
     int evaluateBoard(char[] board, int depth) {
         int index = 0;
 
