@@ -1,9 +1,13 @@
 package myself;
 
 class Board {
-    private static final char[] gameBoard = new char[9];
+    protected static final char[] gameBoard = new char[9];
     private static int turn = 1;
     static GameState gameState = GameState.UNFINISHED;
+
+    private Board() {
+        throw new IllegalStateException("Utility class");
+      }
 
     static void start() {
         turn = 1;
@@ -80,16 +84,6 @@ class Board {
 
     static boolean checkPossibleMove(int square) {
         return gameBoard[square] == ' ';
-    }
-
-    static int emptyIndexes() {
-        int counter = 0;
-        for (int i = 0; i < 9; i++) {
-            if (gameBoard[i] == ' ') {
-                counter++;
-            }
-        }
-        return counter;
     }
 
     static boolean checkWin(char mark) {
