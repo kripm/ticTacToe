@@ -17,7 +17,6 @@ public class Main {
     public static void main(String[] args) {
         while (playing) {
             reset();
-            Board.emptyIndexes();
             switch (start()) {
             case ("PVE"):
                 Board.start();
