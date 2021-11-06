@@ -1,7 +1,7 @@
 package myself;
 
-abstract class AI {
-    abstract void move();
+interface AI {
+    void move();
 
-    abstract void isX(boolean Answer);
+    void isX(boolean answer);
 }
