@@ -2,11 +2,11 @@ package myself;
 
 import java.util.Random;
 
-public class EasyAI extends AI {
+public class EasyAI implements AI {
     Random rn = new Random();
     private char mark;
-    
-    void move() {
+
+    public void move() {
         boolean moveComplete = false;
         do {
             int square = rn.nextInt(9);
@@ -17,11 +17,11 @@ public class EasyAI extends AI {
         } while (!moveComplete);
     }
 
-    void isX(boolean answer) {
-         if (answer) {
-             this.mark = 'X';
-         } else {
-             this.mark = 'O';
-         }
+    public void isX(boolean answer) {
+        if (answer) {
+            this.mark = 'X';
+        } else {
+            this.mark = 'O';
+        }
     }
 }
