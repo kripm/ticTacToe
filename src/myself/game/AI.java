@@ -1,4 +1,4 @@
-package myself;
+package myself.game;
 
 interface AI {
     void move();
