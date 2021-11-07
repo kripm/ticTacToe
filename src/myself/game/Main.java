@@ -1,4 +1,4 @@
-package myself;
+package myself.game;
 
 import java.util.Scanner;
 
