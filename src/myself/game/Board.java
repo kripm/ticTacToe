@@ -1,4 +1,4 @@
-package myself;
+package myself.game;
 
 class Board {
     protected static final char[] gameBoard = new char[9];
