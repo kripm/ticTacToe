@@ -1,12 +1,11 @@
 package myself.gui;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.Image;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import java.awt.Image;
 import java.awt.Cursor;
 import java.awt.Font;
 
@@ -27,6 +26,7 @@ public class MenuPanel extends JPanel {
         Font f1 = new Font(Font.SANS_SERIF, Font.PLAIN, 25);
         JButton xButton = new JButton(smallX);
         JButton oButton = new JButton(smallO);
+        
 
         text.setLayout(null);
         text.setFont(f1);
@@ -41,7 +41,7 @@ public class MenuPanel extends JPanel {
         oButton.setLayout(null);
         oButton.setBounds(350, 220, 120, 120);
         oButton.setCursor(new Cursor (Cursor.HAND_CURSOR));
-
+        
         this.setLayout(null);
         this.setBounds(0, 0, 600, 600);
         this.setLocation(0, 0);
