@@ -1,4 +1,4 @@
-package myself;
+package myself.game;
 
 public class HardAI implements AI {
     private char mark;
