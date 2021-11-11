@@ -1,18 +1,17 @@
 package myself.game;
 
-class Board {
+public class Board {
     protected static final char[] gameBoard = new char[9];
     private static int turn = 1;
-    static GameState gameState = GameState.UNFINISHED;
+    private static GameState gameState = GameState.UNFINISHED;
 
     private Board() {
         throw new IllegalStateException("Utility class");
-      }
+    }
 
-    static void start() {
+    public static void start() {
         turn = 1;
         createNew();
-        current();
     }
 
     private static void createNew() {
@@ -21,27 +20,9 @@ class Board {
         }
     }
 
-    private static void current() {
-        System.out.println("---------");
-        int counter = 0;
-        for (int i = 0; i < 3; i++) {
-            System.out.print("| ");
-            for (int j = 0; j < 3; j++) {
-                if (gameBoard[counter] == ' ') {
-                    System.out.print("  ");
-                } else {
-                    System.out.print(gameBoard[counter] + " ");
-                }
-                counter++;
-            }
-            System.out.println("|");
-        }
-        System.out.println("---------");
-    }
-
-    static void play(Player playerOne, AI ai) { // b.
+    public static void play(Player playerOne, AI ai) { // b.
         if (turn == 1) {
-            playerOne.move();
+            //playerOne.move();
         } else if (turn == 0) {
             ai.move();
         }
@@ -49,9 +30,9 @@ class Board {
 
     static void play(Player playerOne, Player playerTwo) {
         if (turn == 1) {
-            playerOne.move();
+            //playerOne.move();
         } else if (turn == 0) {
-            playerTwo.move();
+            //playerTwo.move();
         }
     }
 
@@ -71,7 +52,7 @@ class Board {
             gameBoard[square] = mark;
             turn++;
         }
-        current();
+
         if (checkWin('X')) {
             gameState = GameState.X_WIN;
         } else if (checkWin('O')) {
@@ -128,7 +109,15 @@ class Board {
         gameBoard[i] = mark;
     }
 
-    static char[] getGameBoard() {
+    public static char[] getGameBoard() {
         return gameBoard;
+    }
+
+    public static GameState getGameState() {
+        return gameState;
+    }
+
+    public static void setGameState(GameState state) {
+        gameState = state;
     }
 }
