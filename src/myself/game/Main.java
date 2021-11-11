@@ -21,10 +21,10 @@ public class Main {
             case ("PVE"):
                 Board.start();
                 playerOne.isX(true);
-                while (Board.gameState == GameState.UNFINISHED) {
+                while (Board.getGameState() == GameState.UNFINISHED) {
                     Board.play(playerOne, easyAI);
                 }
-                Board.gameState = GameState.UNFINISHED;
+                Board.setGameState(GameState.UNFINISHED);
                 reset();
                 break;
 
@@ -32,20 +32,20 @@ public class Main {
                 Board.start();
                 easyAI.isX(true);
                 Board.setTurn(0);
-                while (Board.gameState == GameState.UNFINISHED) {
+                while (Board.getGameState() == GameState.UNFINISHED) {
                     Board.play(playerOne, easyAI);
                 }
-                Board.gameState = GameState.UNFINISHED;
+                Board.setGameState(GameState.UNFINISHED);
                 reset();
                 break;
 
             case ("PVM"):
                 Board.start();
                 playerOne.isX(true);
-                while (Board.gameState == GameState.UNFINISHED) {
+                while (Board.getGameState() == GameState.UNFINISHED) {
                     Board.play(playerOne, mediumAI);
                 }
-                Board.gameState = GameState.UNFINISHED;
+                Board.setGameState(GameState.UNFINISHED);
                 reset();
                 break;
 
@@ -53,20 +53,20 @@ public class Main {
                 Board.start();
                 mediumAI.isX(true);
                 Board.setTurn(0);
-                while (Board.gameState == GameState.UNFINISHED) {
+                while (Board.getGameState() == GameState.UNFINISHED) {
                     Board.play(playerOne, mediumAI);
                 }
-                Board.gameState = GameState.UNFINISHED;
+                Board.setGameState(GameState.UNFINISHED);
                 reset();
                 break;
 
             case ("PVH"):
                 Board.start();
                 playerOne.isX(true);
-                while (Board.gameState == GameState.UNFINISHED) {
+                while (Board.getGameState() == GameState.UNFINISHED) {
                     Board.play(playerOne, hardAI);
                 }
-                Board.gameState = GameState.UNFINISHED;
+                Board.setGameState(GameState.UNFINISHED);
                 reset();
                 break;
 
@@ -74,109 +74,109 @@ public class Main {
                 Board.start();
                 hardAI.isX(true);
                 Board.setTurn(0);
-                while (Board.gameState == GameState.UNFINISHED) {
+                while (Board.getGameState() == GameState.UNFINISHED) {
                     Board.play(playerOne, hardAI);
                 }
-                Board.gameState = GameState.UNFINISHED;
+                Board.setGameState(GameState.UNFINISHED);
                 reset();
                 break;
 
             case ("PVP"):
                 Board.start();
                 playerOne.isX(true);
-                while (Board.gameState == GameState.UNFINISHED) {
+                while (Board.getGameState() == GameState.UNFINISHED) {
                     Board.play(playerOne, playerTwo);
                 }
-                Board.gameState = GameState.UNFINISHED;
+                Board.setGameState(GameState.UNFINISHED);
                 reset();
                 break;
 
             case ("EVE"):
                 Board.start();
                 easyAI.isX(true);
-                while (Board.gameState == GameState.UNFINISHED) {
+                while (Board.getGameState() == GameState.UNFINISHED) {
                     Board.play(easyAI, easyAII);
                 }
-                Board.gameState = GameState.UNFINISHED;
+                Board.setGameState(GameState.UNFINISHED);
                 reset();
                 break;
             case ("EVM"):
                 Board.start();
                 easyAI.isX(true);
-                while (Board.gameState == GameState.UNFINISHED) {
+                while (Board.getGameState() == GameState.UNFINISHED) {
                     Board.play(easyAI, mediumAI);
                 }
-                Board.gameState = GameState.UNFINISHED;
+                Board.setGameState(GameState.UNFINISHED);
                 reset();
                 break;
 
             case ("EVH"):
                 Board.start();
                 easyAI.isX(true);
-                while (Board.gameState == GameState.UNFINISHED) {
+                while (Board.getGameState() == GameState.UNFINISHED) {
                     Board.play(easyAI, hardAI);
                 }
-                Board.gameState = GameState.UNFINISHED;
+                Board.setGameState(GameState.UNFINISHED);
                 reset();
                 break;
 
             case ("MVM"):
                 Board.start();
                 mediumAI.isX(true);
-                while (Board.gameState == GameState.UNFINISHED) {
+                while (Board.getGameState() == GameState.UNFINISHED) {
                     Board.play(mediumAI, mediumAII);
                 }
-                Board.gameState = GameState.UNFINISHED;
+                Board.setGameState(GameState.UNFINISHED);
                 reset();
                 break;
 
             case ("MVE"):
                 Board.start();
                 mediumAI.isX(true);
-                while (Board.gameState == GameState.UNFINISHED) {
+                while (Board.getGameState() == GameState.UNFINISHED) {
                     Board.play(mediumAI, easyAI);
                 }
-                Board.gameState = GameState.UNFINISHED;
+                Board.setGameState(GameState.UNFINISHED);
                 reset();
                 break;
 
             case ("MVH"):
                 Board.start();
                 mediumAI.isX(true);
-                while (Board.gameState == GameState.UNFINISHED) {
+                while (Board.getGameState() == GameState.UNFINISHED) {
                     Board.play(mediumAI, hardAI);
                 }
-                Board.gameState = GameState.UNFINISHED;
+                Board.setGameState(GameState.UNFINISHED);
                 reset();
                 break;
 
             case ("HVH"):
                 Board.start();
                 hardAI.isX(true);
-                while (Board.gameState == GameState.UNFINISHED) {
+                while (Board.getGameState() == GameState.UNFINISHED) {
                     Board.play(hardAI, hardAII);
                 }
-                Board.gameState = GameState.UNFINISHED;
+                Board.setGameState(GameState.UNFINISHED);
                 reset();
                 break;
 
             case ("HVE"):
                 Board.start();
                 hardAI.isX(true);
-                while (Board.gameState == GameState.UNFINISHED) {
+                while (Board.getGameState() == GameState.UNFINISHED) {
                     Board.play(hardAI, easyAI);
                 }
-                Board.gameState = GameState.UNFINISHED;
+                Board.setGameState(GameState.UNFINISHED);
                 reset();
                 break;
 
             case ("HVM"):
                 Board.start();
                 hardAI.isX(true);
-                while (Board.gameState == GameState.UNFINISHED) {
+                while (Board.getGameState() == GameState.UNFINISHED) {
                     Board.play(hardAI, mediumAI);
                 }
-                Board.gameState = GameState.UNFINISHED;
+                Board.setGameState(GameState.UNFINISHED);
                 reset();
                 break;
 
