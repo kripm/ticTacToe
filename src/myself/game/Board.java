@@ -1,7 +1,7 @@
 package myself.game;
 
 public class Board {
-    protected static final char[] gameBoard = new char[9];
+    private static final char[] gameBoard = new char[9];
     private static int turn = 1;
     private static GameState gameState = GameState.UNFINISHED;
 
@@ -37,7 +37,6 @@ public class Board {
         } else if (checkDraw()) {
             gameState = GameState.DRAW;
         }
-        gameState.check(gameState);
     }
 
     static boolean checkPossibleMove(int square) {
@@ -74,10 +73,6 @@ public class Board {
         return isFull;
     }
 
-    public static void setTurn(int number) {
-        turn = number;
-    }
-
     public static int getTurn() {
         return turn;
     }
@@ -86,19 +81,11 @@ public class Board {
         return gameBoard[i];
     }
 
-    static void setMarkAt(int i, char mark) {
-        gameBoard[i] = mark;
-    }
-
     public static char[] getGameBoard() {
         return gameBoard;
     }
 
     public static GameState getGameState() {
         return gameState;
-    }
-
-    public static void setGameState(GameState state) {
-        gameState = state;
     }
 }
