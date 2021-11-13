@@ -4,7 +4,7 @@ public class HardAI implements AI {
     private char mark;
     private char permanentMark;
     private static final int MAX_DEPTH = 6;
-    private char[] board = Board.gameBoard;
+    private final char[] board = Board.getGameBoard();
 
     public void move() {
         boolean isMax;
@@ -23,7 +23,7 @@ public class HardAI implements AI {
             if (board[i] == ' ') {
                 board[i] = mark;
                 mark = swap(mark);
-                int currentScore = minimax(Board.gameBoard, MAX_DEPTH, !isMax);
+                int currentScore = minimax(board, MAX_DEPTH, !isMax);
                 mark = permanentMark;
                 board[i] = ' ';
                 if ((isMax && currentScore > bestScore) || (!isMax && currentScore < bestScore)) {
