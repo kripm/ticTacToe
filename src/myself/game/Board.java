@@ -21,30 +21,6 @@ public class Board {
         }
     }
 
-    public static void play(Player playerOne, AI ai) { // b.
-        if (turn == 1) {
-            // playerOne.move();
-        } else if (turn == 0) {
-            ai.move();
-        }
-    }
-
-    static void play(Player playerOne, Player playerTwo) {
-        if (turn == 1) {
-            // playerOne.move();
-        } else if (turn == 0) {
-            // playerTwo.move();
-        }
-    }
-
-    static void play(AI ai, AI aii) {
-        if (turn == 1) {
-            ai.move();
-        } else if (turn == 0) {
-            aii.move();
-        }
-    }
-
     static void place(int square, char mark) {
         if (turn == 1) {
             gameBoard[square] = mark;
