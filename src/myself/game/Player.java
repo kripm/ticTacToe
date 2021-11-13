@@ -11,10 +11,6 @@ public class Player {
         return false;
     }
 
-    public char getMark() {
-        return mark;
-    }
-
     public void isX(boolean answer) {
         if (answer) {
             this.mark = 'X';
