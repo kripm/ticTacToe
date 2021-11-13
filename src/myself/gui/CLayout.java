@@ -1,7 +1,7 @@
 package myself.gui;
 
-import myself.game.Player;
 import myself.game.AI;
+import myself.game.Player;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -56,7 +56,6 @@ public class CLayout {
         ticTacToe.setFont(bigMenuFont);
         mainMenuPanelCenter.setLayout(new FlowLayout(FlowLayout.CENTER, 500, 75));
         mainMenuPanelCenter.setPreferredSize(new Dimension(600, 500));
-        // mainMenuPanelCenter.setBackground(Color.RED);
         mainMenuPanel.add(ticTacToe, BorderLayout.NORTH);
         mainMenuPanel.add(mainMenuPanelCenter, BorderLayout.CENTER);
         mainMenuPanel.setBounds(0, 0, 600, 600);
