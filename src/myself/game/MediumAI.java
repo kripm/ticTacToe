@@ -3,7 +3,7 @@ package myself.game;
 import java.util.Random;
 
 public class MediumAI implements AI {
-    static Random rn = new Random();
+    static final Random rn = new Random();
     private char mark;
     private char enemyMark;
 
