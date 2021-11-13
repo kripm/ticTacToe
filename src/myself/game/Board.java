@@ -11,6 +11,7 @@ public class Board {
 
     public static void start() {
         turn = 1;
+        gameState = GameState.UNFINISHED;
         createNew();
     }
 
@@ -22,7 +23,7 @@ public class Board {
 
     public static void play(Player playerOne, AI ai) { // b.
         if (turn == 1) {
-            //playerOne.move();
+            // playerOne.move();
         } else if (turn == 0) {
             ai.move();
         }
@@ -30,9 +31,9 @@ public class Board {
 
     static void play(Player playerOne, Player playerTwo) {
         if (turn == 1) {
-            //playerOne.move();
+            // playerOne.move();
         } else if (turn == 0) {
-            //playerTwo.move();
+            // playerTwo.move();
         }
     }
 
@@ -97,8 +98,12 @@ public class Board {
         return isFull;
     }
 
-    static void setTurn(int number) {
+    public static void setTurn(int number) {
         turn = number;
+    }
+
+    public static int getTurn() {
+        return turn;
     }
 
     static char getMarkAt(int i) {
