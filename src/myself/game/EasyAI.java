@@ -3,7 +3,7 @@ package myself.game;
 import java.util.Random;
 
 public class EasyAI implements AI {
-    Random rn = new Random();
+    final Random rn = new Random();
     private char mark;
 
     public void move() {
