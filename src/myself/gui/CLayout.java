@@ -1,6 +1,5 @@
 package myself.gui;
 
-import myself.game.AI;
 import myself.game.Player;
 
 import java.awt.Color;
@@ -11,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
+import java.util.Objects;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -21,37 +21,36 @@ import javax.swing.JButton;
 import javax.swing.WindowConstants;
 
 public class CLayout {
-    Player playerOne = new Player();
-    AI ai;
-    JPanel panelContainer = new JPanel();
-    JPanel mainMenuPanel = new JPanel();
-    JPanel mainMenuPanelCenter = new JPanel();
-    JPanel playButtonPanel = new JPanel();
-    PlayerVsBotMenu playerVsBotMenu = new PlayerVsBotMenu();
-    BotVsBotMenu botVsBotMenu = new BotVsBotMenu();
+    final Player playerOne = new Player();
+    final JPanel panelContainer = new JPanel();
+    final JPanel mainMenuPanel = new JPanel();
+    final JPanel mainMenuPanelCenter = new JPanel();
+    final JPanel playButtonPanel = new JPanel();
+    final PlayerVsBotMenu playerVsBotMenu = new PlayerVsBotMenu();
+    final BotVsBotMenu botVsBotMenu = new BotVsBotMenu();
     GamePanel playerVsBotGamePanel;
     GamePanel botVsBotGamePanel;
-    GamePanel playerVsPlayerGamePanel = new GamePanel(new Player(), new Player());
-    JButton playerVsBotButton = new JButton("Player vs Bot");
-    JButton botVsBotButton = new JButton("Bot vs Bot");
-    JButton playerVsPlayerButton = new JButton("Player vs Player");
-    JButton playButtonA = new JButton("Play");
-    JButton playButtonB = new JButton("Play");
-    JButton backButton = new JButton("Back");
-    static JButton menuButton = new JButton("Menu");
-    static JButton retryButtonA = new JButton("Retry");
-    static JButton retryButtonB = new JButton("Retry");
-    static JButton retryButtonC = new JButton("Retry");
-    JLabel ticTacToe = new JLabel("<HTML><I><U>TicTacToe</U></I></HTML>");
-    CardLayout cl = new CardLayout();
-    Font smallerMenuFont = new Font(Font.SANS_SERIF, Font.PLAIN, 20);
-    Font smallMenuFont = new Font(Font.SANS_SERIF, Font.PLAIN, 30);
-    Font menuFont = new Font(Font.SANS_SERIF, Font.PLAIN, 40);
-    Font bigMenuFont = new Font(Font.SANS_SERIF, Font.PLAIN, 65);
+    GamePanel playerVsPlayerGamePanel;
+    final JButton playerVsBotButton = new JButton("Player vs Bot");
+    final JButton botVsBotButton = new JButton("Bot vs Bot");
+    final JButton playerVsPlayerButton = new JButton("Player vs Player");
+    final JButton playButtonA = new JButton("Play");
+    final JButton playButtonB = new JButton("Play");
+    final JButton backButton = new JButton("Back");
+    static final JButton menuButton = new JButton("Menu");
+    static final JButton retryButtonA = new JButton("Retry");
+    static final JButton retryButtonB = new JButton("Retry");
+    static final JButton retryButtonC = new JButton("Retry");
+    final JLabel ticTacToe = new JLabel("<HTML><I><U>TicTacToe</U></I></HTML>");
+    final CardLayout cl = new CardLayout();
+    final Font smallerMenuFont = new Font(Font.SANS_SERIF, Font.PLAIN, 20);
+    final Font smallMenuFont = new Font(Font.SANS_SERIF, Font.PLAIN, 30);
+    final Font menuFont = new Font(Font.SANS_SERIF, Font.PLAIN, 40);
+    final Font bigMenuFont = new Font(Font.SANS_SERIF, Font.PLAIN, 65);
 
     CLayout() {
         JFrame frame = new JFrame("TicTacToe");
-        ImageIcon image = new ImageIcon("src/myself/gui/images/logo.png");
+        ImageIcon image = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("logo.png")));
 
         ticTacToe.setFont(bigMenuFont);
         mainMenuPanelCenter.setLayout(new FlowLayout(FlowLayout.CENTER, 500, 75));
@@ -63,7 +62,6 @@ public class CLayout {
         panelContainer.add(mainMenuPanel, "MainMenu");
         panelContainer.add(playerVsBotMenu, "PVBM");
         panelContainer.add(botVsBotMenu, "BVBM");
-        panelContainer.add(playerVsPlayerGamePanel, "PVPG");
 
         botVsBotButton.setContentAreaFilled(false);
         botVsBotButton.setFont(menuFont);
@@ -95,69 +93,60 @@ public class CLayout {
 
         cl.show(panelContainer, "1");
 
-        playerVsBotButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                playButtonPanel.remove(playButtonB);
-                playButtonPanel.add(playButtonA);
-                playerVsBotMenu.add(playButtonPanel, BorderLayout.SOUTH);
-                cl.show(panelContainer, "PVBM");
-            }
+        playerVsBotButton.addActionListener(e -> {
+            playButtonPanel.remove(playButtonB);
+            playButtonPanel.add(playButtonA);
+            playerVsBotMenu.add(playButtonPanel, BorderLayout.SOUTH);
+            cl.show(panelContainer, "PVBM");
         });
 
-        botVsBotButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                playButtonPanel.remove(playButtonA);
-                playButtonPanel.add(playButtonB);
-                botVsBotMenu.add(playButtonPanel, BorderLayout.SOUTH);
-                cl.show(panelContainer, "BVBM");
-            }
+        botVsBotButton.addActionListener(e -> {
+            playButtonPanel.remove(playButtonA);
+            playButtonPanel.add(playButtonB);
+            botVsBotMenu.add(playButtonPanel, BorderLayout.SOUTH);
+            cl.show(panelContainer, "BVBM");
         });
 
-        playerVsPlayerButton.addActionListener(e -> cl.show(panelContainer, "PVPG"));
+        playerVsPlayerButton.addActionListener(e -> {
+            playerVsPlayerGamePanel = new GamePanel(new Player(), new Player());
+            panelContainer.add(playerVsPlayerGamePanel, "PVPG");
+            cl.show(panelContainer, "PVPG");
+        });
+
         backButton.addActionListener(e -> cl.show(panelContainer, "MainMenu"));
         menuButton.addActionListener(e -> cl.show(panelContainer, "MainMenu"));
 
-        playButtonA.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                playerVsBotGamePanel = new GamePanel(playerOne, playerVsBotMenu.getAI(),
-                        playerVsBotMenu.getPlayerIsX());
-                panelContainer.add(playerVsBotGamePanel, "PVBG");
-                cl.show(panelContainer, "PVBG");
-            }
+        playButtonA.addActionListener(e -> {
+            playerVsBotGamePanel = new GamePanel(playerOne, playerVsBotMenu.getAI(),
+                    playerVsBotMenu.getPlayerIsX());
+            panelContainer.add(playerVsBotGamePanel, "PVBG");
+            cl.show(panelContainer, "PVBG");
         });
 
-        retryButtonA.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                playerVsBotGamePanel = new GamePanel(playerOne, playerVsBotMenu.getAI(),
-                        playerVsBotMenu.getPlayerIsX());
-                panelContainer.add(playerVsBotGamePanel, "PVBG");
-                cl.show(panelContainer, "PVBG");
-            }
+        retryButtonA.addActionListener(e -> {
+            playerVsBotGamePanel = new GamePanel(playerOne, playerVsBotMenu.getAI(),
+                    playerVsBotMenu.getPlayerIsX());
+            panelContainer.add(playerVsBotGamePanel, "PVBG");
+            cl.show(panelContainer, "PVBG");
         });
 
-        playButtonB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                botVsBotGamePanel = new GamePanel(botVsBotMenu.getAIX(), botVsBotMenu.getAIO());
-                panelContainer.add(botVsBotGamePanel, "BVBG");
-                cl.show(panelContainer, "BVBG");
-            }
+        playButtonB.addActionListener(e -> {
+            botVsBotGamePanel = new GamePanel(botVsBotMenu.getAIX(), botVsBotMenu.getAIO());
+            panelContainer.add(botVsBotGamePanel, "BVBG");
+            cl.show(panelContainer, "BVBG");
         });
 
-        retryButtonB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                botVsBotGamePanel = new GamePanel(botVsBotMenu.getAIX(), botVsBotMenu.getAIO());
-                panelContainer.add(botVsBotGamePanel, "BVBG");
-                cl.show(panelContainer, "BVBG");
-            }
+        retryButtonB.addActionListener(e -> {
+            botVsBotGamePanel = new GamePanel(botVsBotMenu.getAIX(), botVsBotMenu.getAIO());
+            panelContainer.add(botVsBotGamePanel, "BVBG");
+            cl.show(panelContainer, "BVBG");
         });
 
-        retryButtonC.addActionListener(e -> cl.show(panelContainer, "PVPG"));
+        retryButtonC.addActionListener(e -> {
+            playerVsPlayerGamePanel = new GamePanel(new Player(), new Player());
+            panelContainer.add(playerVsPlayerGamePanel, "PVPG");
+            cl.show(panelContainer, "PVPG");
+        });
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);
@@ -169,10 +158,6 @@ public class CLayout {
     }
 
     public static void main(String[] args) {
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new CLayout();
-            }
-        });
+        javax.swing.SwingUtilities.invokeLater(() -> new CLayout());
     }
 }
