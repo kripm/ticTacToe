@@ -3,29 +3,23 @@ package myself.gui;
 import myself.game.Board;
 import myself.game.GameState;
 import myself.game.Player;
-import myself.game.EasyAI;
+import myself.game.AI;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
-
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.SwingConstants;
+
 public class GamePanel extends JLayeredPane {
 
-    Player player = new Player();
-    EasyAI easyAI = new EasyAI();
-    JLabel background = new JLabel();
+    JLabel backgroundGrid = new JLabel();
     JLabel endScreen = new JLabel();
     ImageIcon grid = new ImageIcon("src/myself/gui/images/grid.png");
     ImageIcon imageX = new ImageIcon("src/myself/gui/images/X.png");
@@ -64,9 +58,14 @@ public class GamePanel extends JLayeredPane {
     JButton b8 = new JButton();
     JButton b9 = new JButton();
 
-    GamePanel() {
-        player.isX(true);
-        easyAI.isX(false);
+    GamePanel(Player player, AI ai, boolean playerIsX) {
+        if (playerIsX) {
+            player.isX(true);
+            ai.isX(false);
+        } else if (!playerIsX) {
+            player.isX(false);
+            ai.isX(true);
+        }
 
         x1.setOpaque(true);
         x1.setVisible(false);
@@ -141,20 +140,20 @@ public class GamePanel extends JLayeredPane {
         b9.setContentAreaFilled(false);
         b9.setBounds(400, 400, 200, 200);
 
-        background.setHorizontalAlignment(SwingConstants.CENTER);
-        background.setVerticalAlignment(SwingConstants.CENTER);
-        background.setIcon(grid);
-        background.setOpaque(false);
-        background.setLayout(null);
-        background.setBounds(0, 0, 600, 600);
+        backgroundGrid.setHorizontalAlignment(SwingConstants.CENTER);
+        backgroundGrid.setVerticalAlignment(SwingConstants.CENTER);
+        backgroundGrid.setIcon(grid);
+        backgroundGrid.setOpaque(false);
+        backgroundGrid.setLayout(null);
+        backgroundGrid.setBounds(0, 0, 600, 600);
 
         endScreen.setLayout(null);
         endScreen.setBounds(0, 0, 600, 600);
-        endScreen.setBackground(new Color(0f,0f,0f,.7f));
+        endScreen.setBackground(new Color(0f, 0f, 0f, .7f));
         endScreen.setVisible(false);
 
         add(endScreen);
-        add(background);
+        add(backgroundGrid);
         add(b1);
         add(b2);
         add(b3);
@@ -184,16 +183,22 @@ public class GamePanel extends JLayeredPane {
         add(o9);
 
         Board.start();
-        guiUpdate();
+
+        if (!playerIsX) {
+            ai.move();
+            (new Thread(new GuiWait())).start();
+        }
 
         b1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (player.move(1)) {
-                    if (Board.getGameState() == GameState.UNFINISHED) {
-                        easyAI.move();
-                    }
                     guiUpdate();
+                    if (Board.getGameState() == GameState.UNFINISHED) {
+                        ai.move();
+                    }
+                    (new Thread(new GuiWait())).start();
+                    checkEnd();
                 }
             }
         });
@@ -202,10 +207,12 @@ public class GamePanel extends JLayeredPane {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (player.move(2)) {
-                    if (Board.getGameState() == GameState.UNFINISHED) {
-                        easyAI.move();
-                    }
                     guiUpdate();
+                    if (Board.getGameState() == GameState.UNFINISHED) {
+                        ai.move();
+                    }
+                    (new Thread(new GuiWait())).start();
+                    checkEnd();
                 }
             }
         });
@@ -214,10 +221,12 @@ public class GamePanel extends JLayeredPane {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (player.move(3)) {
-                    if (Board.getGameState() == GameState.UNFINISHED) {
-                        easyAI.move();
-                    }
                     guiUpdate();
+                    if (Board.getGameState() == GameState.UNFINISHED) {
+                        ai.move();
+                    }
+                    (new Thread(new GuiWait())).start();
+                    checkEnd();
                 }
             }
         });
@@ -226,10 +235,12 @@ public class GamePanel extends JLayeredPane {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (player.move(4)) {
-                    if (Board.getGameState() == GameState.UNFINISHED) {
-                        easyAI.move();
-                    }
                     guiUpdate();
+                    if (Board.getGameState() == GameState.UNFINISHED) {
+                        ai.move();
+                    }
+                    (new Thread(new GuiWait())).start();
+                    checkEnd();
                 }
             }
         });
@@ -238,10 +249,12 @@ public class GamePanel extends JLayeredPane {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (player.move(5)) {
-                    if (Board.getGameState() == GameState.UNFINISHED) {
-                        easyAI.move();
-                    }
                     guiUpdate();
+                    if (Board.getGameState() == GameState.UNFINISHED) {
+                        ai.move();
+                    }
+                    (new Thread(new GuiWait())).start();
+                    checkEnd();
                 }
             }
         });
@@ -250,10 +263,12 @@ public class GamePanel extends JLayeredPane {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (player.move(6)) {
-                    if (Board.getGameState() == GameState.UNFINISHED) {
-                        easyAI.move();
-                    }
                     guiUpdate();
+                    if (Board.getGameState() == GameState.UNFINISHED) {
+                        ai.move();
+                    }
+                    (new Thread(new GuiWait())).start();
+                    checkEnd();
                 }
 
             }
@@ -263,10 +278,12 @@ public class GamePanel extends JLayeredPane {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (player.move(7)) {
-                    if (Board.getGameState() == GameState.UNFINISHED) {
-                        easyAI.move();
-                    }
                     guiUpdate();
+                    if (Board.getGameState() == GameState.UNFINISHED) {
+                        ai.move();
+                    }
+                    (new Thread(new GuiWait())).start();
+                    checkEnd();
                 }
             }
         });
@@ -275,10 +292,12 @@ public class GamePanel extends JLayeredPane {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (player.move(8)) {
-                    if (Board.getGameState() == GameState.UNFINISHED) {
-                        easyAI.move();
-                    }
                     guiUpdate();
+                    if (Board.getGameState() == GameState.UNFINISHED) {
+                        ai.move();
+                    }
+                    (new Thread(new GuiWait())).start();
+                    checkEnd();
                 }
             }
         });
@@ -287,11 +306,275 @@ public class GamePanel extends JLayeredPane {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (player.move(9)) {
-                    if (Board.getGameState() == GameState.UNFINISHED) {
-                        easyAI.move();
-                    }
                     guiUpdate();
+                    if (Board.getGameState() == GameState.UNFINISHED) {
+                        ai.move();
+                    }
+                    (new Thread(new GuiWait())).start();
+                    checkEnd();
                 }
+            }
+        });
+    }
+
+    class GuiWait implements Runnable {
+
+        public void run() {
+            try {
+                Thread.sleep(200);
+                guiUpdate();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                Thread.currentThread().interrupt();
+            }
+        }
+
+    }
+
+    GamePanel(Player playerOne, Player playerTwo) {
+        playerOne.isX(true);
+        playerTwo.isX(false);
+
+        x1.setOpaque(true);
+        x1.setVisible(false);
+        x1.setBounds(0, 0, 200, 200);
+        x2.setOpaque(true);
+        x2.setVisible(false);
+        x2.setBounds(200, 0, 200, 200);
+        x3.setOpaque(true);
+        x3.setVisible(false);
+        x3.setBounds(400, 0, 200, 200);
+        x4.setOpaque(true);
+        x4.setVisible(false);
+        x4.setBounds(0, 200, 200, 200);
+        x5.setOpaque(true);
+        x5.setVisible(false);
+        x5.setBounds(200, 200, 200, 200);
+        x6.setOpaque(true);
+        x6.setVisible(false);
+        x6.setBounds(400, 200, 200, 200);
+        x7.setOpaque(true);
+        x7.setVisible(false);
+        x7.setBounds(0, 400, 200, 200);
+        x8.setOpaque(true);
+        x8.setVisible(false);
+        x8.setBounds(200, 400, 200, 200);
+        x9.setOpaque(true);
+        x9.setVisible(false);
+        x9.setBounds(400, 400, 200, 200);
+        o1.setOpaque(true);
+        o1.setVisible(false);
+        o1.setBounds(0, 0, 200, 200);
+        o2.setOpaque(true);
+        o2.setVisible(false);
+        o2.setBounds(200, 0, 200, 200);
+        o3.setOpaque(true);
+        o3.setVisible(false);
+        o3.setBounds(400, 0, 200, 200);
+        o4.setOpaque(true);
+        o4.setVisible(false);
+        o4.setBounds(0, 200, 200, 200);
+        o5.setOpaque(true);
+        o5.setVisible(false);
+        o5.setBounds(200, 200, 200, 200);
+        o6.setOpaque(true);
+        o6.setVisible(false);
+        o6.setBounds(400, 200, 200, 200);
+        o7.setOpaque(true);
+        o7.setVisible(false);
+        o7.setBounds(0, 400, 200, 200);
+        o8.setOpaque(true);
+        o8.setVisible(false);
+        o8.setBounds(200, 400, 200, 200);
+        o9.setOpaque(true);
+        o9.setVisible(false);
+        o9.setBounds(400, 400, 200, 200);
+        b1.setContentAreaFilled(false);
+        b1.setBounds(0, 0, 200, 200);
+        b2.setContentAreaFilled(false);
+        b2.setBounds(200, 0, 200, 200);
+        b3.setContentAreaFilled(false);
+        b3.setBounds(400, 0, 200, 200);
+        b4.setContentAreaFilled(false);
+        b4.setBounds(0, 200, 200, 200);
+        b5.setContentAreaFilled(false);
+        b5.setBounds(200, 200, 200, 200);
+        b6.setContentAreaFilled(false);
+        b6.setBounds(400, 200, 200, 200);
+        b7.setContentAreaFilled(false);
+        b7.setBounds(0, 400, 200, 200);
+        b8.setContentAreaFilled(false);
+        b8.setBounds(200, 400, 200, 200);
+        b9.setContentAreaFilled(false);
+        b9.setBounds(400, 400, 200, 200);
+
+        backgroundGrid.setHorizontalAlignment(SwingConstants.CENTER);
+        backgroundGrid.setVerticalAlignment(SwingConstants.CENTER);
+        backgroundGrid.setIcon(grid);
+        backgroundGrid.setOpaque(false);
+        backgroundGrid.setLayout(null);
+        backgroundGrid.setBounds(0, 0, 600, 600);
+
+        endScreen.setLayout(null);
+        endScreen.setBounds(0, 0, 600, 600);
+        endScreen.setBackground(new Color(0f, 0f, 0f, .7f));
+        endScreen.setVisible(false);
+
+        add(endScreen);
+        add(backgroundGrid);
+        add(b1);
+        add(b2);
+        add(b3);
+        add(b4);
+        add(b5);
+        add(b6);
+        add(b7);
+        add(b8);
+        add(b9);
+        add(x1);
+        add(x2);
+        add(x3);
+        add(x4);
+        add(x5);
+        add(x6);
+        add(x7);
+        add(x8);
+        add(x9);
+        add(o1);
+        add(o2);
+        add(o3);
+        add(o4);
+        add(o5);
+        add(o6);
+        add(o7);
+        add(o8);
+        add(o9);
+
+        Board.start();
+
+        b1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Board.getTurn() == 1) {
+                    playerOne.move(1);
+
+                } else if (Board.getTurn() == 0) {
+                    playerTwo.move(1);
+                }
+                guiUpdate();
+                checkEnd();
+            }
+        });
+
+        b2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Board.getTurn() == 1) {
+                    playerOne.move(2);
+
+                } else if (Board.getTurn() == 0) {
+                    playerTwo.move(2);
+                }
+                guiUpdate();
+                checkEnd();
+            }
+        });
+
+        b3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Board.getTurn() == 1) {
+                    playerOne.move(3);
+
+                } else if (Board.getTurn() == 0) {
+                    playerTwo.move(3);
+                }
+                guiUpdate();
+                checkEnd();
+            }
+        });
+
+        b4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Board.getTurn() == 1) {
+                    playerOne.move(4);
+
+                } else if (Board.getTurn() == 0) {
+                    playerTwo.move(4);
+                }
+                guiUpdate();
+                checkEnd();
+            }
+        });
+
+        b5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Board.getTurn() == 1) {
+                    playerOne.move(5);
+
+                } else if (Board.getTurn() == 0) {
+                    playerTwo.move(5);
+                }
+                guiUpdate();
+                checkEnd();
+            }
+        });
+
+        b6.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Board.getTurn() == 1) {
+                    playerOne.move(6);
+
+                } else if (Board.getTurn() == 0) {
+                    playerTwo.move(6);
+                }
+                guiUpdate();
+                checkEnd();
+            }
+        });
+
+        b7.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Board.getTurn() == 1) {
+                    playerOne.move(7);
+
+                } else if (Board.getTurn() == 0) {
+                    playerTwo.move(7);
+                }
+                guiUpdate();
+                checkEnd();
+            }
+        });
+
+        b8.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Board.getTurn() == 1) {
+                    playerOne.move(8);
+
+                } else if (Board.getTurn() == 0) {
+                    playerTwo.move(8);
+                }
+                guiUpdate();
+                checkEnd();
+            }
+        });
+
+        b9.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Board.getTurn() == 1) {
+                    playerOne.move(9);
+
+                } else if (Board.getTurn() == 0) {
+                    playerTwo.move(9);
+                }
+                guiUpdate();
+                checkEnd();
             }
         });
     }
@@ -301,73 +584,76 @@ public class GamePanel extends JLayeredPane {
         for (char mark : Board.getGameBoard()) {
             if (mark == 'X') {
                 switch (index) {
-                    case 1:
-                        x1.setVisible(true);
-                        break;
-                    case 2:
-                        x2.setVisible(true);
-                        break;
-                    case 3:
-                        x3.setVisible(true);
-                        break;  
-                    case 4:
-                        x4.setVisible(true);
-                        break;
-                    case 5:
-                        x5.setVisible(true);
-                        break;
-                    case 6:
-                        x6.setVisible(true);
-                        break;
-                    case 7:
-                        x7.setVisible(true);
-                        break;    
-                    case 8:
-                        x8.setVisible(true);
-                        break;   
-                    case 9:
-                        x9.setVisible(true);
-                        break;               
+                case 1:
+                    x1.setVisible(true);
+                    break;
+                case 2:
+                    x2.setVisible(true);
+                    break;
+                case 3:
+                    x3.setVisible(true);
+                    break;
+                case 4:
+                    x4.setVisible(true);
+                    break;
+                case 5:
+                    x5.setVisible(true);
+                    break;
+                case 6:
+                    x6.setVisible(true);
+                    break;
+                case 7:
+                    x7.setVisible(true);
+                    break;
+                case 8:
+                    x8.setVisible(true);
+                    break;
+                case 9:
+                    x9.setVisible(true);
+                    break;
                 }
             } else if (mark == 'O') {
                 switch (index) {
-                    case 1:
-                        o1.setVisible(true);
-                        break;
-                    case 2:
-                        o2.setVisible(true);
-                        break;
-                    case 3:
-                        o3.setVisible(true);
-                        break;  
-                    case 4:
-                        o4.setVisible(true);
-                        break;
-                    case 5:
-                        o5.setVisible(true);
-                        break;
-                    case 6:
-                        o6.setVisible(true);
-                        break;
-                    case 7:
-                        o7.setVisible(true);
-                        break;    
-                    case 8:
-                        o8.setVisible(true);
-                        break;   
-                    case 9:
-                        o9.setVisible(true);
-                        break;   
+                case 1:
+                    o1.setVisible(true);
+                    break;
+                case 2:
+                    o2.setVisible(true);
+                    break;
+                case 3:
+                    o3.setVisible(true);
+                    break;
+                case 4:
+                    o4.setVisible(true);
+                    break;
+                case 5:
+                    o5.setVisible(true);
+                    break;
+                case 6:
+                    o6.setVisible(true);
+                    break;
+                case 7:
+                    o7.setVisible(true);
+                    break;
+                case 8:
+                    o8.setVisible(true);
+                    break;
+                case 9:
+                    o9.setVisible(true);
+                    break;
                 }
             }
-        index++;
+            index++;
         }
+    }
 
-        if (Board.getGameState() == GameState.O_WIN || Board.getGameState() == GameState.X_WIN || Board.getGameState() == GameState.DRAW) {
+    void checkEnd() {
+        if (Board.getGameState() == GameState.O_WIN || Board.getGameState() == GameState.X_WIN
+                || Board.getGameState() == GameState.DRAW) {
             endScreen.setOpaque(true);
             endScreen.setVerticalAlignment(SwingConstants.CENTER);
             endScreen.setHorizontalAlignment(SwingConstants.CENTER);
-            endScreen.setFont(new Font ("Verdana", Font.ITALIC, 100));
+            endScreen.setFont(new Font("Verdana", Font.ITALIC, 100));
             endScreen.setForeground(Color.RED);
             endScreen.setVisible(true);
             b1.setVisible(false);
@@ -379,9 +665,13 @@ public class GamePanel extends JLayeredPane {
             b7.setVisible(false);
             b8.setVisible(false);
             b9.setVisible(false);
-            if (Board.getGameState() == GameState.O_WIN || Board.getGameState() == GameState.X_WIN || Board.getGameState() == GameState.DRAW) {
+            if (Board.getGameState() == GameState.O_WIN) {
+                endScreen.setText("O WINS");
+            } else if (Board.getGameState() == GameState.X_WIN) {
                 endScreen.setText("X WINS");
+            } else if (Board.getGameState() == GameState.DRAW) {
+                endScreen.setText("DRAW");
             }
         }
-    } 
+    }
 }
