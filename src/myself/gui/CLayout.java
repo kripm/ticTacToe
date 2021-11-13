@@ -13,6 +13,8 @@ import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
@@ -41,7 +43,7 @@ public class CLayout {
 
     CLayout() {
         JFrame frame = new JFrame("TicTacToe");
-        ImageIcon image = new ImageIcon("src/myself/gui/Images/logo.png");
+        ImageIcon image = new ImageIcon("src/myself/gui/images/logo.png");
 
         mainMenuPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 500, 50));
         mainMenuPanel.setBounds(0, 0, 600, 600);
@@ -63,14 +65,19 @@ public class CLayout {
         playButtonA.setPreferredSize(new Dimension(300, 60));
         playButtonA.setBackground(Color.LIGHT_GRAY);
         playButtonA.setFont(menuFont);
+
+        backButton.setContentAreaFilled(false);
+        backButton.setPreferredSize(new Dimension(100, 50));
+        backButton.setVerticalAlignment(0);
+
         playButtonPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 30, 0));
+        playButtonPanel.setLayout(new FlowLayout(0, 27, 0));
+        playButtonPanel.add(backButton);
         playButtonPanel.add(playButtonA);
 
         mainMenuPanel.add(playerVsBotButton);
         mainMenuPanel.add(botVsBotButton);
         mainMenuPanel.add(playerVsPlayerButton);
-        playerVsBotMenu.add(backButton);
-        botVsBotMenu.add(backButton);
 
         cl.show(panelContainer, "1");
 
