@@ -490,8 +490,6 @@ public class GamePanel extends JLayeredPane {
         endScreen.setBackground(new Color(0f, 0f, 0f, .7f));
         endScreen.setVisible(false);
 
-        // CLayout.backButton.setBounds(195, 360, 100, 40);
-
         add(endScreen);
         add(backgroundGrid);
         add(b1);
